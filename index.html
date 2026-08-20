@@ -1,916 +1,1140 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050508">
-    <meta name="description" content="Forged Fear VR — Enter the fear. Forge your survival.">
-    <title>FORGED FEAR VR</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #050508;
-            --bg2: #09090e;
-            --panel: rgba(15, 15, 22, 0.72);
-            --line: rgba(255, 255, 255, 0.08);
-            --text: #f2f2f7;
-            --muted: #858591;
-            --red: #ff1744;
-            --red2: #ff4164;
-            --purple: #8a2be2;
-            --cyan: #00e5ff;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: Arial, Helvetica, sans-serif;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.035;
-            background-image:
-                linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
-            background-size: 70px 70px;
-            mask-image: linear-gradient(to bottom, black, transparent 80%);
-        }
-
-        #particles {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            opacity: .35;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            from {
-                transform: translateY(110vh);
-            }
-            to {
-                transform: translateY(-10vh);
-            }
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 76px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 6%;
-            z-index: 50;
-            background: rgba(5, 5, 8, .7);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--line);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            font-size: 17px;
-        }
-
-        .logo-mark {
-            width: 30px;
-            height: 30px;
-            border: 2px solid var(--red);
-            transform: rotate(45deg);
-            position: relative;
-            box-shadow: 0 0 18px rgba(255, 23, 68, .5);
-        }
-
-        .logo-mark::after {
-            content: "";
-            position: absolute;
-            inset: 6px;
-            border: 1px solid var(--red);
-        }
-
-        nav ul {
-            display: flex;
-            gap: 34px;
-            list-style: none;
-        }
-
-        nav a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            transition: .25s;
-        }
-
-        nav a:hover {
-            color: white;
-        }
-
-        .nav-button {
-            padding: 11px 19px;
-            border: 1px solid rgba(255, 23, 68, .6);
-            color: white !important;
-            background: rgba(255, 23, 68, .08);
-            box-shadow: inset 0 0 15px rgba(255, 23, 68, .04);
-        }
-
-        .hero {
-            min-height: 100vh;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            padding: 130px 8% 80px;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            right: -250px;
-            top: 80px;
-            background: radial-gradient(circle, rgba(255, 23, 68, .16), transparent 65%);
-            filter: blur(10px);
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            left: -250px;
-            bottom: -200px;
-            background: radial-gradient(circle, rgba(138, 43, 226, .12), transparent 65%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 850px;
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--red2);
-            font-size: 11px;
-            letter-spacing: 4px;
-            font-weight: 800;
-            margin-bottom: 22px;
-        }
-
-        .eyebrow::before {
-            content: "";
-            width: 35px;
-            height: 1px;
-            background: var(--red);
-            box-shadow: 0 0 10px var(--red);
-        }
-
-        h1 {
-            font-size: clamp(60px, 10vw, 150px);
-            line-height: .82;
-            letter-spacing: -7px;
-            font-weight: 950;
-            text-transform: uppercase;
-            max-width: 900px;
-        }
-
-        h1 span {
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,.45);
-        }
-
-        .hero-description {
-            margin-top: 35px;
-            color: #9b9ba6;
-            max-width: 590px;
-            line-height: 1.8;
-            font-size: 15px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 35px;
-            flex-wrap: wrap;
-        }
-
-        .button {
-            text-decoration: none;
-            color: white;
-            padding: 16px 25px;
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: .3s;
-            border: 1px solid var(--line);
-            background: rgba(255,255,255,.035);
-        }
-
-        .button.primary {
-            background: var(--red);
-            border-color: var(--red);
-            box-shadow: 0 0 30px rgba(255, 23, 68, .25);
-        }
-
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,.4);
-        }
-
-        .button.primary:hover {
-            box-shadow: 0 0 40px rgba(255, 23, 68, .45);
-        }
-
-        .status {
-            position: absolute;
-            right: 8%;
-            bottom: 70px;
-            color: #575762;
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            writing-mode: vertical-rl;
-        }
-
-        .section {
-            position: relative;
-            z-index: 2;
-            padding: 120px 8%;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            margin-bottom: 55px;
-            gap: 30px;
-        }
-
-        .section-number {
-            color: var(--red);
-            font-size: 10px;
-            letter-spacing: 4px;
-            margin-bottom: 12px;
-        }
-
-        h2 {
-            font-size: clamp(38px, 5vw, 72px);
-            letter-spacing: -3px;
-            text-transform: uppercase;
-        }
-
-        .section-header p {
-            max-width: 390px;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .feature {
-            min-height: 300px;
-            padding: 35px;
-            border: 1px solid var(--line);
-            background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
-            position: relative;
-            overflow: hidden;
-            transition: .35s;
-        }
-
-        .feature::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 70px;
-            height: 2px;
-            background: var(--red);
-            box-shadow: 0 0 20px var(--red);
-        }
-
-        .feature:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 23, 68, .35);
-            background: linear-gradient(145deg, rgba(255,23,68,.08), rgba(255,255,255,.015));
-        }
-
-        .feature-icon {
-            width: 55px;
-            height: 55px;
-            border: 1px solid rgba(255,255,255,.12);
-            display: grid;
-            place-items: center;
-            margin-bottom: 50px;
-            color: var(--red);
-            font-size: 22px;
-        }
-
-        .feature h3 {
-            font-size: 19px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 14px;
-        }
-
-        .feature p {
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .experience {
-            display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 15px;
-        }
-
-        .visual {
-            min-height: 500px;
-            border: 1px solid var(--line);
-            position: relative;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 60% 45%, rgba(255,23,68,.16), transparent 25%),
-                linear-gradient(135deg, #0c0c12, #030306);
-        }
-
-        .visual::before {
-            content: "FORGED";
-            position: absolute;
-            font-size: 18vw;
-            font-weight: 950;
-            color: rgba(255,255,255,.015);
-            white-space: nowrap;
-            transform: rotate(-20deg);
-            top: 25%;
-            left: -10%;
-        }
-
-        .crosshair {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 150px;
-            height: 150px;
-            transform: translate(-50%, -50%);
-            border: 1px solid rgba(255,255,255,.13);
-            border-radius: 50%;
-        }
-
-        .crosshair::before,
-        .crosshair::after {
-            content: "";
-            position: absolute;
-            background: var(--red);
-            box-shadow: 0 0 10px var(--red);
-        }
-
-        .crosshair::before {
-            width: 1px;
-            height: 180px;
-            left: 50%;
-            top: -15px;
-        }
-
-        .crosshair::after {
-            height: 1px;
-            width: 180px;
-            top: 50%;
-            left: -15px;
-        }
-
-        .scan {
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--red), transparent);
-            box-shadow: 0 0 15px var(--red);
-            animation: scan 4s infinite linear;
-        }
-
-        @keyframes scan {
-            from { top: 0; }
-            to { top: 100%; }
-        }
-
-        .visual-label {
-            position: absolute;
-            left: 25px;
-            bottom: 25px;
-            font-size: 9px;
-            letter-spacing: 3px;
-            color: #777782;
-        }
-
-        .info-panel {
-            border: 1px solid var(--line);
-            padding: 40px;
-            background: var(--panel);
-            backdrop-filter: blur(15px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .info-panel h3 {
-            font-size: 31px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .info-panel p {
-            color: var(--muted);
-            line-height: 1.9;
-            font-size: 13px;
-        }
-
-        .stats {
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            border-top: 1px solid var(--line);
-        }
-
-        .stat {
-            padding: 22px 0;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .stat:nth-child(odd) {
-            margin-right: 20px;
-            border-right: 1px solid var(--line);
-        }
-
-        .stat strong {
-            display: block;
-            font-size: 27px;
-            color: white;
-        }
-
-        .stat span {
-            color: #666672;
-            font-size: 9px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .quote {
-            padding: 140px 8%;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .quote-mark {
-            color: var(--red);
-            font-size: 70px;
-            line-height: .5;
-        }
-
-        .quote h2 {
-            max-width: 950px;
-            margin: 35px auto;
-            font-size: clamp(35px, 5vw, 65px);
-        }
-
-        .quote p {
-            color: #666672;
-            letter-spacing: 3px;
-            font-size: 9px;
-            text-transform: uppercase;
-        }
-
-        .cta {
-            margin: 0 8% 100px;
-            padding: 80px 8%;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,23,68,.25);
-            background:
-                radial-gradient(circle at 90% 50%, rgba(255,23,68,.18), transparent 35%),
-                linear-gradient(120deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
-        }
-
-        .cta h2 {
-            max-width: 650px;
-        }
-
-        .cta p {
-            color: var(--muted);
-            margin-top: 20px;
-            max-width: 500px;
-            line-height: 1.8;
-            font-size: 13px;
-        }
-
-        footer {
-            position: relative;
-            z-index: 2;
-            border-top: 1px solid var(--line);
-            padding: 35px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #4f4f59;
-            font-size: 9px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .glitch {
-            animation: glitch 5s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 94%, 100% {
-                transform: translate(0);
-            }
-            95% {
-                transform: translate(2px, -1px);
-            }
-            96% {
-                transform: translate(-2px, 1px);
-            }
-            97% {
-                transform: translate(1px, 0);
-            }
-        }
-
-        @media (max-width: 850px) {
-            nav ul {
-                display: none;
-            }
-
-            .hero {
-                padding-left: 7%;
-                padding-right: 7%;
-            }
-
-            h1 {
-                font-size: 18vw;
-                letter-spacing: -4px;
-            }
-
-            .features,
-            .experience {
-                grid-template-columns: 1fr;
-            }
-
-            .section-header {
-                display: block;
-            }
-
-            .section-header p {
-                margin-top: 20px;
-            }
-
-            .visual {
-                min-height: 350px;
-            }
-
-            .status {
-                display: none;
-            }
-
-            .cta {
-                margin-left: 5%;
-                margin-right: 5%;
-            }
-
-            footer {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="Forged Fear VR — A first-person VR horror experience inspired by the Backrooms and Dreamcore.">
+<title>FORGED FEAR VR</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:#eee;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:100;
+    opacity:.035;
+    background-image:
+        linear-gradient(rgba(255,255,255,.7) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.7) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:linear-gradient(to bottom,#000,transparent 85%);
+}
+
+body:after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:99;
+    background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,.75));
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:#fff;
+    opacity:.25;
+    border-radius:50%;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(110vh)}
+    to{transform:translateY(-10vh)}
+}
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:76px;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:rgba(5,5,5,.65);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:4px;
+}
+
+.logo-icon{
+    width:28px;
+    height:28px;
+    border:1px solid #fff;
+    position:relative;
+    transform:rotate(45deg);
+}
+
+.logo-icon:after{
+    content:"";
+    position:absolute;
+    inset:6px;
+    border:1px solid #777;
+}
+
+nav ul{
+    display:flex;
+    gap:32px;
+    list-style:none;
+}
+
+nav a{
+    color:#777;
+    text-decoration:none;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#fff;
+}
+
+.nav-discord{
+    border:1px solid rgba(255,255,255,.2);
+    padding:11px 18px;
+    color:#fff!important;
+}
+
+.hero{
+    min-height:100vh;
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    padding:130px 8% 80px;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 75% 45%,rgba(180,180,180,.07),transparent 25%),
+        radial-gradient(circle at 20% 80%,rgba(255,255,255,.025),transparent 30%);
+}
+
+.hero-image{
+    position:absolute;
+    inset:0;
+    z-index:-2;
+    opacity:.13;
+    background:
+        linear-gradient(90deg,#050505 0%,transparent 50%,#050505 100%),
+        linear-gradient(0deg,#050505 0%,transparent 60%,#050505 100%);
+}
+
+.hero-lines{
+    position:absolute;
+    right:9%;
+    top:25%;
+    width:280px;
+    height:420px;
+    border:1px solid rgba(255,255,255,.08);
+    transform:perspective(600px) rotateY(-25deg);
+}
+
+.hero-lines:before,
+.hero-lines:after{
+    content:"";
+    position:absolute;
+    inset:25px;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.hero-lines:after{
+    inset:55px;
+}
+
+.hero-content{
+    max-width:900px;
+    position:relative;
+    z-index:2;
+}
+
+.kicker{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#aaa;
+    font-size:9px;
+    letter-spacing:5px;
+    font-weight:800;
+    margin-bottom:25px;
+}
+
+.kicker:before{
+    content:"";
+    width:40px;
+    height:1px;
+    background:#aaa;
+}
+
+h1{
+    font-size:clamp(65px,11vw,155px);
+    line-height:.8;
+    letter-spacing:-8px;
+    font-weight:950;
+    text-transform:uppercase;
+}
+
+h1 .outline{
+    color:transparent;
+    -webkit-text-stroke:1px rgba(255,255,255,.5);
+}
+
+.hero-text{
+    max-width:620px;
+    margin-top:38px;
+    color:#929292;
+    font-size:14px;
+    line-height:1.9;
+}
+
+.hero-text strong{
+    color:#ddd;
+}
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:32px;
+}
+
+.button{
+    display:inline-block;
+    padding:16px 24px;
+    border:1px solid rgba(255,255,255,.15);
+    color:#fff;
+    text-decoration:none;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    transition:.3s;
+    background:rgba(255,255,255,.025);
+}
+
+.button:hover{
+    background:#fff;
+    color:#000;
+    transform:translateY(-3px);
+}
+
+.button.primary{
+    background:#eee;
+    color:#050505;
+}
+
+.hero-meta{
+    position:absolute;
+    bottom:35px;
+    left:8%;
+    right:8%;
+    display:flex;
+    justify-content:space-between;
+    color:#4d4d4d;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.section{
+    position:relative;
+    z-index:2;
+    padding:130px 8%;
+}
+
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:30px;
+    margin-bottom:55px;
+}
+
+.number{
+    font-size:9px;
+    letter-spacing:4px;
+    color:#666;
+    margin-bottom:12px;
+}
+
+h2{
+    font-size:clamp(42px,6vw,78px);
+    line-height:.9;
+    letter-spacing:-4px;
+    text-transform:uppercase;
+}
+
+.section-top p{
+    max-width:420px;
+    color:#737373;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.story{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.story-box{
+    min-height:440px;
+    padding:45px;
+    border:1px solid rgba(255,255,255,.08);
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+    position:relative;
+    overflow:hidden;
+}
+
+.story-box:first-child{
+    background:
+        radial-gradient(circle at 70% 20%,rgba(255,255,255,.08),transparent 25%),
+        linear-gradient(145deg,#101010,#050505);
+}
+
+.story-box h3{
+    font-size:31px;
+    text-transform:uppercase;
+    margin-bottom:22px;
+}
+
+.story-box p{
+    color:#777;
+    line-height:1.9;
+    font-size:13px;
+    max-width:550px;
+}
+
+.story-decoration{
+    position:absolute;
+    right:-60px;
+    bottom:-100px;
+    width:330px;
+    height:330px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:50%;
+}
+
+.story-decoration:before,
+.story-decoration:after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:50%;
+}
+
+.story-decoration:before{
+    inset:35px;
+}
+
+.story-decoration:after{
+    inset:75px;
+}
+
+.levels{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.level{
+    height:210px;
+    padding:25px;
+    border:1px solid rgba(255,255,255,.07);
+    background:linear-gradient(145deg,#101010,#070707);
+    position:relative;
+    overflow:hidden;
+    transition:.35s;
+}
+
+.level:hover{
+    transform:translateY(-7px);
+    border-color:rgba(255,255,255,.22);
+}
+
+.level-number{
+    color:#555;
+    font-size:9px;
+    letter-spacing:3px;
+}
+
+.level h3{
+    position:absolute;
+    left:25px;
+    bottom:25px;
+    font-size:18px;
+    text-transform:uppercase;
+}
+
+.level:after{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    right:-35px;
+    top:-35px;
+    border:1px solid rgba(255,255,255,.05);
+    transform:rotate(45deg);
+}
+
+.level:nth-child(2){
+    background:linear-gradient(145deg,#12110c,#070707);
+}
+
+.level:nth-child(3){
+    background:linear-gradient(145deg,#0d1111,#050606);
+}
+
+.level:nth-child(4){
+    background:linear-gradient(145deg,#110d13,#060507);
+}
+
+.level:nth-child(5){
+    background:linear-gradient(145deg,#10100e,#060606);
+}
+
+.level:nth-child(6){
+    background:linear-gradient(145deg,#0c0d12,#050507);
+}
+
+.level:nth-child(7){
+    background:linear-gradient(145deg,#120e0e,#060505);
+}
+
+.level:nth-child(8){
+    background:linear-gradient(145deg,#0d1110,#050706);
+}
+
+.level:nth-child(9){
+    background:linear-gradient(145deg,#110f12,#060506);
+}
+
+.level:nth-child(10){
+    background:linear-gradient(145deg,#0f0f0f,#040404);
+}
+
+.level:nth-child(11){
+    background:linear-gradient(145deg,#151515,#050505);
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.feature{
+    min-height:230px;
+    border:1px solid rgba(255,255,255,.07);
+    padding:35px;
+    background:rgba(255,255,255,.018);
+    transition:.3s;
+}
+
+.feature:hover{
+    background:rgba(255,255,255,.04);
+    transform:translateY(-5px);
+}
+
+.feature-icon{
+    font-size:25px;
+    color:#aaa;
+    margin-bottom:45px;
+}
+
+.feature h3{
+    font-size:18px;
+    text-transform:uppercase;
+    margin-bottom:12px;
+}
+
+.feature p{
+    color:#707070;
+    font-size:12px;
+    line-height:1.8;
+}
+
+.quote{
+    position:relative;
+    z-index:2;
+    padding:150px 8%;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.05);
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.quote-symbol{
+    font-size:70px;
+    color:#555;
+}
+
+.quote h2{
+    max-width:1000px;
+    margin:20px auto 30px;
+}
+
+.quote p{
+    color:#555;
+    font-size:9px;
+    letter-spacing:4px;
+}
+
+.social{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.social-card{
+    padding:35px;
+    min-height:170px;
+    border:1px solid rgba(255,255,255,.07);
+    text-decoration:none;
+    color:#fff;
+    background:rgba(255,255,255,.018);
+    transition:.3s;
+}
+
+.social-card:hover{
+    transform:translateY(-5px);
+    background:#fff;
+    color:#000;
+}
+
+.social-card span{
+    display:block;
+    color:#666;
+    font-size:9px;
+    letter-spacing:3px;
+    margin-bottom:45px;
+}
+
+.social-card h3{
+    font-size:22px;
+    text-transform:uppercase;
+}
+
+.cta{
+    position:relative;
+    z-index:2;
+    margin:0 8% 100px;
+    padding:90px 8%;
+    border:1px solid rgba(255,255,255,.12);
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 80% 50%,rgba(255,255,255,.08),transparent 30%),
+        linear-gradient(120deg,#101010,#060606);
+}
+
+.cta:before{
+    content:"11";
+    position:absolute;
+    right:5%;
+    top:-50px;
+    font-size:300px;
+    font-weight:950;
+    color:rgba(255,255,255,.025);
+}
+
+.cta h2{
+    max-width:700px;
+    position:relative;
+}
+
+.cta p{
+    color:#777;
+    max-width:500px;
+    line-height:1.9;
+    margin-top:20px;
+    font-size:13px;
+    position:relative;
+}
+
+footer{
+    position:relative;
+    z-index:2;
+    border-top:1px solid rgba(255,255,255,.06);
+    padding:35px 8%;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:#444;
+    font-size:8px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+}
+
+.fade{
+    opacity:0;
+    transform:translateY(25px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.fade.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media(max-width:850px){
+
+    nav ul{
+        display:none;
+    }
+
+    nav{
+        padding:0 6%;
+    }
+
+    .hero{
+        padding:130px 7% 90px;
+    }
+
+    h1{
+        font-size:19vw;
+        letter-spacing:-5px;
+    }
+
+    .hero-lines{
+        opacity:.3;
+        right:-100px;
+    }
+
+    .section{
+        padding:100px 7%;
+    }
+
+    .section-top{
+        display:block;
+    }
+
+    .section-top p{
+        margin-top:20px;
+    }
+
+    .story{
+        grid-template-columns:1fr;
+    }
+
+    .levels{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .social{
+        grid-template-columns:1fr;
+    }
+
+    .cta{
+        margin-left:5%;
+        margin-right:5%;
+    }
+
+    footer{
+        flex-direction:column;
+        text-align:center;
+    }
+}
+
+@media(max-width:520px){
+
+    .levels{
+        grid-template-columns:1fr;
+    }
+
+    .hero-meta{
+        display:none;
+    }
+
+    .story-box{
+        padding:30px;
+    }
+
+    .cta{
+        padding:60px 30px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div id="particles"></div>
+<div id="particles"></div>
 
-    <nav>
-        <div class="logo">
-            <div class="logo-mark"></div>
-            FORGED FEAR
+<nav>
+
+    <div class="logo">
+        <div class="logo-icon"></div>
+        FORGED FEAR
+    </div>
+
+    <ul>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#levels">LEVELS</a></li>
+        <li><a href="#features">FEATURES</a></li>
+        <li><a href="#community">COMMUNITY</a></li>
+    </ul>
+
+    <a class="nav-discord" href="https://discord.gg/TCCTKRGQcs" target="_blank">
+        DISCORD
+    </a>
+
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-image"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+
+        <div class="kicker">
+            FIRST-PERSON VR HORROR
         </div>
 
-        <ul>
-            <li><a href="#game">GAME</a></li>
-            <li><a href="#features">FEATURES</a></li>
-            <li><a href="#experience">EXPERIENCE</a></li>
-            <li><a href="#about">ABOUT</a></li>
-        </ul>
+        <h1>
+            FORGED<br>
+            <span class="outline">FEAR</span>
+        </h1>
 
-        <a class="nav-button" href="#play">ENTER</a>
-    </nav>
+        <p class="hero-text">
+            A first-person VR horror experience blending the unsettling mystery
+            of the <strong>Backrooms</strong> with the surreal atmosphere of
+            <strong>Dreamcore</strong>.
+            <br><br>
+            You are alone. You are lost.
+            And the deeper you go, the less the world makes sense.
+        </p>
 
-    <main>
+        <div class="buttons">
+            <a class="button primary" href="#about">
+                ENTER THE EXPERIENCE
+            </a>
 
-        <section class="hero" id="game">
-            <div class="hero-content">
-                <div class="eyebrow">VR HORROR // SYSTEM ONLINE</div>
+            <a class="button" href="https://discord.gg/TCCTKRGQcs" target="_blank">
+                JOIN DISCORD
+            </a>
+        </div>
 
-                <h1 class="glitch">
-                    FORGED<br>
-                    <span>FEAR</span>
-                </h1>
+    </div>
 
-                <p class="hero-description">
-                    Step beyond the screen and into a world built to make you question
-                    what is real. Forged Fear VR combines immersive virtual reality,
-                    terrifying environments and physical interaction into an experience
-                    where fear isn't something you watch.
-                    <strong>You experience it.</strong>
-                </p>
+    <div class="hero-meta">
+        <span>FFVR // PROJECT 001</span>
+        <span>11 LEVELS // UNKNOWN THREATS</span>
+        <span>VR EXPERIENCE</span>
+    </div>
 
-                <div class="buttons">
-                    <a class="button primary" href="#play">Enter The Fear</a>
-                    <a class="button" href="#features">Explore Game</a>
-                </div>
-            </div>
-
-            <div class="status">
-                FFVR // IMMERSION PROTOCOL // ACTIVE
-            </div>
-        </section>
+</section>
 
 
-        <section class="section" id="features">
-            <div class="section-header">
-                <div>
-                    <div class="section-number">01 // SYSTEMS</div>
-                    <h2>Built For Fear</h2>
-                </div>
+<section class="section fade" id="about">
 
-                <p>
-                    Every system is designed around one goal:
-                    putting you directly inside the nightmare.
-                </p>
-            </div>
+    <div class="section-top">
 
-            <div class="features">
+        <div>
+            <div class="number">01 // THE EXPERIENCE</div>
+            <h2>Something<br>Feels Wrong.</h2>
+        </div>
 
-                <div class="feature">
-                    <div class="feature-icon">◈</div>
-                    <h3>Full VR Immersion</h3>
-                    <p>
-                        Look around. Reach out. Move through the environment.
-                        Your body becomes part of the game.
-                    </p>
-                </div>
+        <p>
+            Trapped in a world that feels strangely familiar yet completely
+            wrong, you must navigate through impossible environments while
+            trying to understand what happened — and how to escape.
+        </p>
 
-                <div class="feature">
-                    <div class="feature-icon">⌁</div>
-                    <h3>Living Environments</h3>
-                    <p>
-                        Explore unsettling locations where darkness hides more
-                        than empty space.
-                    </p>
-                </div>
+    </div>
 
-                <div class="feature">
-                    <div class="feature-icon">+</div>
-                    <h3>Survival</h3>
-                    <p>
-                        Resources are limited. Every decision matters.
-                        Sometimes running is the only option.
-                    </p>
-                </div>
+    <div class="story">
 
-            </div>
-        </section>
+        <div class="story-box">
 
-
-        <section class="section" id="experience">
-
-            <div class="section-header">
-                <div>
-                    <div class="section-number">02 // IMMERSION</div>
-                    <h2>Enter The Unknown</h2>
-                </div>
-
-                <p>
-                    There is no safe distance in VR.
-                    The environment surrounds you from every direction.
-                </p>
-            </div>
-
-            <div class="experience">
-
-                <div class="visual">
-                    <div class="scan"></div>
-                    <div class="crosshair"></div>
-                    <div class="visual-label">
-                        VISUAL FEED // UNKNOWN LOCATION
-                    </div>
-                </div>
-
-                <div class="info-panel">
-                    <h3>You Are Not Watching.</h3>
-
-                    <p>
-                        Forged Fear VR is designed around presence.
-                        Darkness isn't just something you see — it's something
-                        you have to enter.
-                        <br><br>
-                        Explore abandoned spaces, uncover what happened,
-                        solve problems and survive whatever is waiting beyond
-                        the next door.
-                    </p>
-
-                    <div class="stats">
-                        <div class="stat">
-                            <strong>VR</strong>
-                            <span>Immersive</span>
-                        </div>
-
-                        <div class="stat">
-                            <strong>1st</strong>
-                            <span>Person</span>
-                        </div>
-
-                        <div class="stat">
-                            <strong>∞</strong>
-                            <span>Unknowns</span>
-                        </div>
-
-                        <div class="stat">
-                            <strong>?</strong>
-                            <span>Survival</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-        <section class="quote">
-            <div class="quote-mark">"</div>
-
-            <h2>
-                THE DARKNESS DOESN'T NEED TO FIND YOU.
-                YOU'VE ALREADY WALKED INTO IT.
-            </h2>
-
-            <p>FORGED FEAR VR // ENTER AT YOUR OWN RISK</p>
-        </section>
-
-
-        <section class="section" id="about">
-            <div class="section-header">
-                <div>
-                    <div class="section-number">03 // THE PROJECT</div>
-                    <h2>Forged In Fear</h2>
-                </div>
-
-                <p>
-                    A VR horror experience built around atmosphere,
-                    immersion and the feeling that something is always nearby.
-                </p>
-            </div>
-
-            <div class="experience">
-
-                <div class="info-panel">
-                    <h3>Fear Is Physical.</h3>
-
-                    <p>
-                        Forged Fear VR aims to push virtual reality horror
-                        further by making the player part of the environment.
-                        <br><br>
-                        Every sound could matter.
-                        Every hallway could hide something.
-                        Every decision could change what happens next.
-                    </p>
-                </div>
-
-                <div class="visual">
-                    <div class="scan"></div>
-                    <div class="crosshair"></div>
-                    <div class="visual-label">
-                        PROJECT FF // DEVELOPMENT BUILD
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-        <section class="cta" id="play">
-            <div class="section-number">04 // ACCESS</div>
-
-            <h2>ARE YOU READY TO ENTER?</h2>
+            <h3>Lost.</h3>
 
             <p>
-                The door is open. The lights are going out.
-                The only question left is whether you step inside.
+                There is no map telling you where to go.
+                No voice telling you what to do.
+                No guarantee that the room you entered will still exist
+                when you turn around.
+                <br><br>
+                Explore abandoned facilities, endless fluorescent corridors,
+                surreal dream-like spaces and places that shouldn't exist.
             </p>
 
-            <div class="buttons">
-                <a href="#" class="button primary">Coming Soon</a>
-                <a href="#" class="button">Join Community</a>
-            </div>
-        </section>
+            <div class="story-decoration"></div>
 
-    </main>
+        </div>
+
+        <div class="story-box">
+
+            <h3>Alone.</h3>
+
+            <p>
+                Forged Fear isn't about becoming an unstoppable hero.
+                You are vulnerable, isolated and surrounded by the unknown.
+                <br><br>
+                Listen carefully.
+                Watch your surroundings.
+                And remember that sometimes the scariest thing
+                is not knowing what is watching you.
+            </p>
+
+            <div class="story-decoration"></div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-    <footer>
-        <div>© 2026 FORGED FEAR VR</div>
-        <div>BUILT FOR IMMERSION // MADE FOR THE FEARLESS</div>
-    </footer>
+<section class="section fade" id="levels">
+
+    <div class="section-top">
+
+        <div>
+            <div class="number">02 // THE MAZE</div>
+            <h2>11 Levels.<br>11 Worlds.</h2>
+        </div>
+
+        <p>
+            Eleven handcrafted environments, each with its own visual identity,
+            sounds, atmosphere and hidden dangers.
+        </p>
+
+    </div>
+
+    <div class="levels">
+
+        <div class="level">
+            <span class="level-number">LEVEL 01</span>
+            <h3>The Beginning</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 02</span>
+            <h3>Unknown</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 03</span>
+            <h3>Lost Facility</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 04</span>
+            <h3>Dream State</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 05</span>
+            <h3>Endless Hall</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 06</span>
+            <h3>Unknown</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 07</span>
+            <h3>Forgotten</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 08</span>
+            <h3>Reality?</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 09</span>
+            <h3>Unknown</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 10</span>
+            <h3>The Deeper</h3>
+        </div>
+
+        <div class="level">
+            <span class="level-number">LEVEL 11</span>
+            <h3>???</h3>
+        </div>
+
+    </div>
+
+</section>
 
 
-    <script>
-        const particleContainer = document.getElementById("particles");
+<section class="quote fade">
 
-        for (let i = 0; i < 70; i++) {
-            const particle = document.createElement("div");
-            particle.className = "particle";
+    <div class="quote-symbol">"</div>
 
-            particle.style.left = Math.random() * 100 + "%";
-            particle.style.animationDuration = (8 + Math.random() * 18) + "s";
-            particle.style.animationDelay = (-Math.random() * 20) + "s";
-            particle.style.opacity = (0.1 + Math.random() * 0.4);
+    <h2>
+        THE DEEPER YOU GO,
+        THE LESS THE WORLD
+        MAKES SENSE.
+    </h2>
 
-            particleContainer.appendChild(particle);
+    <p>
+        CAN YOU ESCAPE THE MAZE?
+    </p>
+
+</section>
+
+
+<section class="section fade" id="features">
+
+    <div class="section-top">
+
+        <div>
+            <div class="number">03 // FEATURES</div>
+            <h2>Built For<br>Immersion.</h2>
+        </div>
+
+        <p>
+            Designed specifically for virtual reality, Forged Fear uses
+            atmosphere and presence to make the player feel truly trapped
+            inside the world.
+        </p>
+
+    </div>
+
+    <div class="features">
+
+        <div class="feature">
+            <div class="feature-icon">◈</div>
+            <h3>11 Handcrafted Levels</h3>
+            <p>
+                Explore eleven unique environments inspired by the Backrooms
+                and Dreamcore, each with its own atmosphere and dangers.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">◎</div>
+            <h3>Full VR Immersion</h3>
+            <p>
+                Realistic scale, physical presence and virtual reality
+                interaction designed to make the world feel real.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">⌁</div>
+            <h3>Spatial Audio</h3>
+            <p>
+                Atmospheric sound design surrounds you from every direction.
+                Sometimes hearing something is worse than seeing it.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">?</div>
+            <h3>Hidden Secrets</h3>
+            <p>
+                Explore carefully. Hidden details, unexpected encounters
+                and secrets are waiting throughout the maze.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section fade" id="community">
+
+    <div class="section-top">
+
+        <div>
+            <div class="number">04 // COMMUNITY</div>
+            <h2>Find Us.</h2>
+        </div>
+
+        <p>
+            Follow Forged Fear for development updates, gameplay,
+            behind-the-scenes content and announcements.
+        </p>
+
+    </div>
+
+    <div class="social">
+
+        <a class="social-card"
+           href="https://www.youtube.com/@forgedfearvr"
+           target="_blank">
+
+            <span>VIDEO // YOUTUBE</span>
+            <h3>@forgedfearvr</h3>
+
+        </a>
+
+        <a class="social-card"
+           href="https://www.tiktok.com/@forgedfearvr"
+           target="_blank">
+
+            <span>SHORT FORM // TIKTOK</span>
+            <h3>@forgedfearvr</h3>
+
+        </a>
+
+        <a class="social-card"
+           href="https://discord.gg/TCCTKRGQcs"
+           target="_blank">
+
+            <span>COMMUNITY // DISCORD</span>
+            <h3>JOIN THE SERVER</h3>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="cta fade">
+
+    <div class="number">05 // FINAL WARNING</div>
+
+    <h2>
+        CAN YOU ESCAPE
+        THE MAZE?
+    </h2>
+
+    <p>
+        Or was the fear forged for you all along?
+    </p>
+
+    <div class="buttons">
+
+        <a class="button primary"
+           href="https://discord.gg/TCCTKRGQcs"
+           target="_blank">
+            ENTER THE COMMUNITY
+        </a>
+
+        <a class="button"
+           href="https://www.youtube.com/@forgedfearvr"
+           target="_blank">
+            WATCH FORGED FEAR
+        </a>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <span>© 2026 FORGED FEAR VR</span>
+
+    <span>
+        THE WORLD ISN'T WHAT IT SEEMS
+    </span>
+
+    <span>
+        @FORGEDFEARVR
+    </span>
+
+</footer>
+
+
+<script>
+
+const particles = document.getElementById("particles");
+
+for(let i=0;i<70;i++){
+
+    const p=document.createElement("div");
+
+    p.className="particle";
+
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(8+Math.random()*18)+"s";
+    p.style.animationDelay=(-Math.random()*20)+"s";
+    p.style.opacity=.1+Math.random()*.3;
+
+    particles.appendChild(p);
+}
+
+
+const observer=new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible");
         }
 
-        const hero = document.querySelector(".hero");
+    });
 
-        document.addEventListener("mousemove", (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 10;
-            const y = (e.clientY / window.innerHeight - 0.5) * 10;
+},{threshold:.12});
 
-            hero.style.backgroundPosition =
-                `${50 + x}% ${50 + y}%`;
-        });
 
-        const observer = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = "1";
-                        entry.target.style.transform = "translateY(0)";
-                    }
-                });
-            },
-            { threshold: 0.12 }
-        );
+document.querySelectorAll(".fade").forEach(el=>{
+    observer.observe(el);
+});
 
-        document.querySelectorAll(".feature, .visual, .info-panel, .cta").forEach(el => {
-            el.style.opacity = "0";
-            el.style.transform = "translateY(25px)";
-            el.style.transition = "opacity .8s ease, transform .8s ease";
-            observer.observe(el);
-        });
-    </script>
+
+document.addEventListener("mousemove",(e)=>{
+
+    const x=(e.clientX/window.innerWidth-.5)*8;
+    const y=(e.clientY/window.innerHeight-.5)*8;
+
+    const lines=document.querySelector(".hero-lines");
+
+    if(lines){
+        lines.style.transform=
+            `perspective(600px) rotateY(${-25+x}deg) translate(${x}px,${y}px)`;
+    }
+
+});
+
+
+</script>
 
 </body>
-                  </html>
+</html>
+```
