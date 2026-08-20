@@ -3,15 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050505">
-<meta name="description" content="Forged Fear VR - A first-person VR horror experience inspired by the Backrooms and Dreamcore.">
-<title>FORGED FEAR VR</title>
+<meta name="description" content="Forged Fear VR — an immersive psychological horror experience inspired by the Backrooms and Dreamcore.">
+<title>FORGED FEAR // VR HORROR</title>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
+}
+
+:root{
+    --bg:#050505;
+    --bg2:#090909;
+    --text:#e8e8e8;
+    --muted:#777;
+    --dim:#3c3c3c;
+    --line:rgba(255,255,255,.09);
+    --line2:rgba(255,255,255,.16);
 }
 
 html{
@@ -19,9 +28,10 @@ html{
 }
 
 body{
-    background:#050505;
-    color:#eee;
-    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Courier New",monospace;
+    min-height:100vh;
     overflow-x:hidden;
 }
 
@@ -30,13 +40,15 @@ body:before{
     position:fixed;
     inset:0;
     pointer-events:none;
-    z-index:100;
+    z-index:9999;
     opacity:.035;
-    background-image:
-        linear-gradient(rgba(255,255,255,.7) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.7) 1px,transparent 1px);
-    background-size:80px 80px;
-    mask-image:linear-gradient(to bottom,#000,transparent 85%);
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            #fff 3px
+        );
 }
 
 body:after{
@@ -44,339 +56,306 @@ body:after{
     position:fixed;
     inset:0;
     pointer-events:none;
-    z-index:99;
-    background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,.75));
+    z-index:9998;
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 35%,
+            rgba(0,0,0,.72) 100%
+        );
 }
 
-#particles{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
-.particle{
-    position:absolute;
-    width:2px;
-    height:2px;
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+::selection{
     background:#fff;
-    opacity:.25;
-    border-radius:50%;
-    animation:float linear infinite;
+    color:#000;
 }
 
-@keyframes float{
-    from{transform:translateY(110vh)}
-    to{transform:translateY(-10vh)}
-}
+/* =========================
+   NAVIGATION
+========================= */
 
-nav{
+.nav{
     position:fixed;
     top:0;
     left:0;
     width:100%;
     height:76px;
-    z-index:50;
+    z-index:1000;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 6%;
-    background:rgba(5,5,5,.72);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.07);
+    padding:0 5vw;
+    border-bottom:1px solid var(--line);
+    background:rgba(5,5,5,.84);
+    backdrop-filter:blur(14px);
 }
 
 .logo{
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:5px;
+}
+
+.logo span{
+    color:#555;
+}
+
+.nav-links{
     display:flex;
     align-items:center;
-    gap:13px;
-    font-size:14px;
-    font-weight:900;
-    letter-spacing:4px;
-    color:#fff;
-    text-decoration:none;
+    gap:28px;
 }
 
-.logo-icon{
-    width:28px;
-    height:28px;
-    border:1px solid #fff;
-    position:relative;
-    transform:rotate(45deg);
-}
-
-.logo-icon:after{
-    content:"";
-    position:absolute;
-    inset:6px;
-    border:1px solid #777;
-}
-
-nav ul{
-    display:flex;
-    gap:32px;
-    list-style:none;
-}
-
-nav a{
+.nav-links a{
     color:#777;
-    text-decoration:none;
-    font-size:10px;
-    font-weight:800;
+    font-size:9px;
     letter-spacing:2px;
-    transition:.3s;
+    transition:.2s;
 }
 
-nav a:hover{
+.nav-links a:hover{
     color:#fff;
 }
 
-.nav-button{
-    border:1px solid rgba(255,255,255,.2);
-    padding:11px 18px;
-    color:#fff!important;
+.menu{
+    display:none;
+    border:1px solid var(--line2);
+    background:transparent;
+    color:#fff;
+    padding:9px 12px;
+    font-size:9px;
 }
+
+/* =========================
+   GLOBAL
+========================= */
+
+.page{
+    min-height:100vh;
+    padding:140px 7vw 90px;
+    position:relative;
+}
+
+.page-header{
+    max-width:1100px;
+    margin:0 auto 70px;
+}
+
+.number{
+    color:#555;
+    font-size:9px;
+    letter-spacing:4px;
+    margin-bottom:25px;
+}
+
+.page-title{
+    font-size:clamp(50px,9vw,130px);
+    line-height:.82;
+    letter-spacing:-6px;
+    text-transform:uppercase;
+}
+
+.outline{
+    color:transparent;
+    -webkit-text-stroke:1px #777;
+}
+
+.page-subtitle{
+    max-width:650px;
+    color:#777;
+    font-size:12px;
+    line-height:1.9;
+    margin-top:35px;
+}
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
     min-height:100vh;
     position:relative;
-    z-index:1;
+    overflow:hidden;
     display:flex;
     align-items:center;
-    padding:130px 8% 80px;
-    overflow:hidden;
-    background:
-        radial-gradient(circle at 75% 45%,rgba(180,180,180,.07),transparent 25%),
-        radial-gradient(circle at 20% 80%,rgba(255,255,255,.025),transparent 30%);
+    padding:130px 7vw 80px;
 }
 
-.hero-lines{
+.hero-grid{
     position:absolute;
-    right:9%;
-    top:25%;
-    width:280px;
-    height:420px;
-    border:1px solid rgba(255,255,255,.08);
-    transform:perspective(600px) rotateY(-25deg);
-}
-
-.hero-lines:before,
-.hero-lines:after{
-    content:"";
-    position:absolute;
-    inset:25px;
-    border:1px solid rgba(255,255,255,.06);
-}
-
-.hero-lines:after{
-    inset:55px;
+    inset:0;
+    opacity:.18;
+    background-image:
+        linear-gradient(var(--line) 1px,transparent 1px),
+        linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:70px 70px;
+    transform:perspective(700px) rotateX(62deg) scale(1.6);
+    transform-origin:center bottom;
+    top:40%;
 }
 
 .hero-content{
-    max-width:900px;
     position:relative;
-    z-index:2;
+    z-index:3;
+    max-width:1100px;
 }
 
 .kicker{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    color:#aaa;
-    font-size:9px;
+    color:#555;
+    font-size:10px;
     letter-spacing:5px;
-    font-weight:800;
-    margin-bottom:25px;
+    margin-bottom:28px;
 }
 
-.kicker:before{
-    content:"";
-    width:40px;
-    height:1px;
-    background:#aaa;
-}
-
-h1{
-    font-size:clamp(65px,11vw,155px);
-    line-height:.8;
-    letter-spacing:-8px;
-    font-weight:950;
+.hero-title{
+    font-size:clamp(60px,12vw,175px);
+    line-height:.76;
+    letter-spacing:-10px;
     text-transform:uppercase;
 }
 
-h1 .outline{
+.hero-title .solid{
+    display:block;
+}
+
+.hero-title .ghost{
+    display:block;
     color:transparent;
-    -webkit-text-stroke:1px rgba(255,255,255,.5);
+    -webkit-text-stroke:1px #666;
 }
 
-.hero-text{
-    max-width:620px;
-    margin-top:38px;
-    color:#929292;
-    font-size:14px;
-    line-height:1.9;
+.hero-description{
+    max-width:650px;
+    margin-top:40px;
+    color:#777;
+    font-size:13px;
+    line-height:2;
 }
 
-.hero-text strong{
-    color:#ddd;
-}
-
-.buttons{
+.hero-buttons{
     display:flex;
     flex-wrap:wrap;
-    gap:12px;
-    margin-top:32px;
+    gap:10px;
+    margin-top:35px;
 }
 
 .button{
-    display:inline-block;
-    padding:16px 24px;
-    border:1px solid rgba(255,255,255,.15);
-    color:#fff;
-    text-decoration:none;
-    font-size:10px;
-    font-weight:900;
+    border:1px solid var(--line2);
+    background:rgba(255,255,255,.025);
+    color:#aaa;
+    padding:14px 20px;
+    font-size:9px;
     letter-spacing:2px;
     text-transform:uppercase;
-    transition:.3s;
-    background:rgba(255,255,255,.025);
+    transition:.2s;
 }
 
 .button:hover{
     background:#fff;
     color:#000;
-    transform:translateY(-3px);
+    border-color:#fff;
 }
 
 .button.primary{
-    background:#eee;
-    color:#050505;
+    background:#fff;
+    color:#000;
+    border-color:#fff;
 }
 
-.hero-meta{
+.button.primary:hover{
+    background:#ccc;
+}
+
+.hero-status{
     position:absolute;
-    bottom:35px;
-    left:8%;
-    right:8%;
-    display:flex;
-    justify-content:space-between;
-    color:#4d4d4d;
+    right:6vw;
+    bottom:60px;
+    z-index:3;
+    color:#444;
     font-size:8px;
     letter-spacing:3px;
+    writing-mode:vertical-rl;
 }
+
+/* =========================
+   SECTIONS
+========================= */
 
 .section{
-    position:relative;
-    z-index:2;
-    padding:130px 8%;
+    max-width:1100px;
+    margin:0 auto;
 }
 
-.section-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    gap:30px;
-    margin-bottom:55px;
-}
-
-.number{
+.section-label{
+    color:#555;
     font-size:9px;
     letter-spacing:4px;
-    color:#666;
-    margin-bottom:12px;
+    margin-bottom:25px;
 }
 
-h2{
-    font-size:clamp(42px,6vw,78px);
+.section-title{
+    font-size:clamp(35px,6vw,80px);
     line-height:.9;
+    text-transform:uppercase;
     letter-spacing:-4px;
-    text-transform:uppercase;
+    margin-bottom:35px;
 }
 
-.section-top p{
-    max-width:420px;
-    color:#737373;
-    font-size:13px;
-    line-height:1.9;
-}
-
-.story{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-}
-
-.story-box{
-    min-height:440px;
-    padding:45px;
-    border:1px solid rgba(255,255,255,.08);
-    background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
-    position:relative;
-    overflow:hidden;
-}
-
-.story-box h3{
-    font-size:31px;
-    text-transform:uppercase;
-    margin-bottom:22px;
-}
-
-.story-box p{
+.section-text{
     color:#777;
-    line-height:1.9;
-    font-size:13px;
-    max-width:550px;
+    max-width:760px;
+    font-size:12px;
+    line-height:2;
 }
 
-.story-decoration{
-    position:absolute;
-    right:-60px;
-    bottom:-100px;
-    width:330px;
-    height:330px;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:50%;
-}
-
-.story-decoration:before,
-.story-decoration:after{
-    content:"";
-    position:absolute;
-    border:1px solid rgba(255,255,255,.05);
-    border-radius:50%;
-}
-
-.story-decoration:before{
-    inset:35px;
-}
-
-.story-decoration:after{
-    inset:75px;
-}
+/* =========================
+   LEVELS
+========================= */
 
 .levels{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:12px;
+    gap:10px;
+    margin-top:55px;
 }
 
 .level{
-    height:210px;
+    min-height:230px;
+    border:1px solid var(--line);
     padding:25px;
-    border:1px solid rgba(255,255,255,.07);
-    background:linear-gradient(145deg,#101010,#070707);
     position:relative;
     overflow:hidden;
-    transition:.35s;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.035),
+            transparent
+        );
+    transition:.25s;
 }
 
 .level:hover{
-    transform:translateY(-7px);
-    border-color:rgba(255,255,255,.22);
+    border-color:var(--line2);
+    transform:translateY(-3px);
 }
 
 .level-number{
-    color:#555;
+    color:#444;
     font-size:9px;
     letter-spacing:3px;
 }
@@ -384,259 +363,136 @@ h2{
 .level h3{
     position:absolute;
     left:25px;
-    bottom:25px;
-    font-size:18px;
+    bottom:45px;
+    font-size:19px;
+    font-weight:normal;
     text-transform:uppercase;
 }
 
-.level:after{
-    content:"";
+.level p{
     position:absolute;
-    width:100px;
-    height:100px;
-    right:-35px;
-    top:-35px;
-    border:1px solid rgba(255,255,255,.05);
-    transform:rotate(45deg);
+    left:25px;
+    bottom:20px;
+    color:#555;
+    font-size:8px;
+    letter-spacing:1px;
 }
+
+/* =========================
+   FEATURES
+========================= */
 
 .features{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    gap:1px;
+    margin-top:55px;
+    background:var(--line);
+    border:1px solid var(--line);
 }
 
 .feature{
-    min-height:230px;
-    border:1px solid rgba(255,255,255,.07);
+    background:var(--bg);
     padding:35px;
-    background:rgba(255,255,255,.018);
-    transition:.3s;
+    min-height:180px;
 }
 
-.feature:hover{
-    background:rgba(255,255,255,.04);
-    transform:translateY(-5px);
-}
-
-.feature-icon{
-    font-size:25px;
-    color:#aaa;
-    margin-bottom:45px;
+.feature-number{
+    color:#444;
+    font-size:9px;
+    letter-spacing:3px;
+    margin-bottom:30px;
 }
 
 .feature h3{
     font-size:18px;
+    font-weight:normal;
     text-transform:uppercase;
-    margin-bottom:12px;
+    margin-bottom:15px;
 }
 
 .feature p{
-    color:#707070;
-    font-size:12px;
+    color:#666;
+    font-size:10px;
     line-height:1.8;
 }
 
-.quote{
-    position:relative;
-    z-index:2;
-    padding:150px 8%;
-    text-align:center;
-    border-top:1px solid rgba(255,255,255,.05);
-    border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.quote-symbol{
-    font-size:70px;
-    color:#555;
-}
-
-.quote h2{
-    max-width:1000px;
-    margin:20px auto 30px;
-}
-
-.quote p{
-    color:#555;
-    font-size:9px;
-    letter-spacing:4px;
-}
-
-.social{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.social-card{
-    padding:35px;
-    min-height:170px;
-    border:1px solid rgba(255,255,255,.07);
-    text-decoration:none;
-    color:#fff;
-    background:rgba(255,255,255,.018);
-    transition:.3s;
-}
-
-.social-card:hover{
-    transform:translateY(-5px);
-    background:#fff;
-    color:#000;
-}
-
-.social-card span{
-    display:block;
-    color:#666;
-    font-size:9px;
-    letter-spacing:3px;
-    margin-bottom:45px;
-}
-
-.social-card h3{
-    font-size:22px;
-    text-transform:uppercase;
-}
-
-.cta{
-    position:relative;
-    z-index:2;
-    margin:0 8% 100px;
-    padding:90px 8%;
-    border:1px solid rgba(255,255,255,.12);
-    overflow:hidden;
-    background:
-        radial-gradient(circle at 80% 50%,rgba(255,255,255,.08),transparent 30%),
-        linear-gradient(120deg,#101010,#060606);
-}
-
-.cta:before{
-    content:"11";
-    position:absolute;
-    right:5%;
-    top:-50px;
-    font-size:300px;
-    font-weight:950;
-    color:rgba(255,255,255,.025);
-}
-
-.cta h2{
-    max-width:700px;
-    position:relative;
-}
-
-.cta p{
-    color:#777;
-    max-width:500px;
-    line-height:1.9;
-    margin-top:20px;
-    font-size:13px;
-    position:relative;
-}
-
-footer{
-    position:relative;
-    z-index:2;
-    border-top:1px solid rgba(255,255,255,.06);
-    padding:35px 8%;
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    color:#444;
-    font-size:8px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-}
-
-footer a{
-    color:#555;
-    text-decoration:none;
-}
-
-footer a:hover{
-    color:#fff;
-}
-
-
 /* =========================
-   INNER PAGES
+   QUOTE
 ========================= */
 
-.page{
-    min-height:100vh;
-    position:relative;
-    z-index:2;
-    padding:160px 8% 100px;
+.quote{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:100px 0;
+    margin-top:120px;
 }
 
-.page-header{
-    max-width:850px;
-    margin-bottom:70px;
-}
-
-.page-title{
-    font-size:clamp(48px,8vw,100px);
-    line-height:.85;
-    letter-spacing:-5px;
+.quote-text{
+    max-width:1000px;
+    font-size:clamp(30px,6vw,75px);
+    line-height:1;
+    letter-spacing:-3px;
     text-transform:uppercase;
 }
 
-.page-subtitle{
-    color:#707070;
-    margin-top:25px;
-    max-width:650px;
-    font-size:13px;
-    line-height:1.9;
+.quote-text span{
+    color:transparent;
+    -webkit-text-stroke:1px #666;
 }
 
-.policy{
-    max-width:950px;
+/* =========================
+   SOCIAL
+========================= */
+
+.social{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:40px;
 }
 
-.policy-section{
-    border-top:1px solid rgba(255,255,255,.08);
-    padding:35px 0;
-}
-
-.policy-section h3{
-    font-size:18px;
-    text-transform:uppercase;
-    margin-bottom:18px;
-}
-
-.policy-section p,
-.policy-section li{
+.social a{
+    border:1px solid var(--line);
+    padding:14px 18px;
     color:#777;
-    font-size:13px;
-    line-height:1.9;
+    font-size:9px;
+    letter-spacing:2px;
+    transition:.2s;
 }
 
-.policy-section ul{
-    padding-left:20px;
-    margin-top:12px;
+.social a:hover{
+    color:#fff;
+    border-color:var(--line2);
 }
 
-.policy-section a{
-    color:#ccc;
+/* =========================
+   FORM
+========================= */
+
+.form-container{
+    max-width:850px;
+    margin:0 auto;
 }
 
 .notice{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.018);
     padding:25px;
-    margin-bottom:30px;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.025);
-    color:#888;
-    font-size:12px;
-    line-height:1.8;
+    color:#666;
+    font-size:10px;
+    line-height:1.9;
+    margin-bottom:20px;
 }
 
-.form-container{
-    max-width:700px;
+.notice strong{
+    color:#aaa;
+    letter-spacing:2px;
 }
 
 .form-box{
-    border:1px solid rgba(255,255,255,.09);
-    background:rgba(255,255,255,.02);
-    padding:40px;
+    border:1px solid var(--line);
+    padding:35px;
 }
 
 .form-group{
@@ -645,150 +501,401 @@ footer a:hover{
 
 .form-group label{
     display:block;
-    color:#aaa;
+    color:#555;
     font-size:9px;
-    letter-spacing:3px;
+    letter-spacing:2px;
+    margin-bottom:10px;
     text-transform:uppercase;
-    margin-bottom:9px;
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select{
+.form-group textarea{
     width:100%;
+    border:1px solid var(--line);
     background:#080808;
-    border:1px solid rgba(255,255,255,.12);
     color:#eee;
     padding:15px;
-    font-family:inherit;
     outline:none;
-    transition:.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-    border-color:rgba(255,255,255,.4);
-}
-
-.form-group textarea{
-    min-height:140px;
+    font-size:11px;
     resize:vertical;
 }
 
+.form-group input:focus,
+.form-group textarea:focus{
+    border-color:#555;
+}
+
+.form-group textarea{
+    min-height:130px;
+}
+
 .form-note{
-    color:#555;
-    font-size:10px;
+    color:#444;
+    font-size:9px;
     line-height:1.7;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .success{
     display:none;
-    padding:25px;
     margin-top:20px;
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.025);
+    border:1px solid var(--line2);
+    padding:25px;
     color:#aaa;
-    font-size:12px;
+    font-size:10px;
     line-height:1.8;
 }
 
-.error{
-    color:#999;
-    font-size:11px;
-    margin-top:10px;
-    display:none;
+.success strong{
+    color:#fff;
 }
 
+.dev-error{
+    color:#888;
+    margin-top:15px;
+    font-size:10px;
+}
+
+/* =========================
+   DEV SECTION
+========================= */
+
+.dev-login{
+    max-width:500px;
+    margin:0 auto;
+}
+
+.dev-login-box{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.02);
+    padding:40px;
+}
+
+.dev-warning{
+    border:1px solid var(--line);
+    padding:20px;
+    margin-bottom:20px;
+    color:#666;
+    font-size:10px;
+    line-height:1.8;
+    letter-spacing:1px;
+}
+
+.dev-dashboard{
+    max-width:1200px;
+    margin:0 auto;
+}
+
+.dev-topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+
+.dev-topbar h2{
+    font-size:28px;
+    font-weight:normal;
+    letter-spacing:-1px;
+}
+
+.dev-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.dev-stat{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.018);
+    padding:25px;
+}
+
+.dev-stat span{
+    display:block;
+    color:#444;
+    font-size:8px;
+    letter-spacing:3px;
+    margin-bottom:15px;
+}
+
+.dev-stat strong{
+    font-size:30px;
+    font-weight:normal;
+}
+
+.dev-search{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.dev-search input{
+    flex:1;
+    background:#080808;
+    border:1px solid var(--line);
+    color:#fff;
+    padding:14px;
+    outline:none;
+    font-size:10px;
+}
+
+.small-button{
+    border:1px solid var(--line2);
+    background:rgba(255,255,255,.02);
+    color:#888;
+    padding:11px 14px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:8px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    transition:.2s;
+}
+
+.small-button:hover{
+    background:#fff;
+    color:#000;
+}
+
+.requests{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.request-card{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.018);
+    padding:25px;
+}
+
+.request-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.request-id{
+    color:#444;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.status{
+    padding:7px 10px;
+    border:1px solid var(--line2);
+    font-size:8px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.status.pending{
+    color:#aaa;
+}
+
+.status.completed{
+    color:#fff;
+    border-color:#777;
+}
+
+.status.rejected{
+    color:#555;
+}
+
+.request-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.request-field{
+    padding:15px;
+    background:rgba(255,255,255,.02);
+}
+
+.request-field span{
+    display:block;
+    color:#444;
+    font-size:8px;
+    letter-spacing:2px;
+    margin-bottom:7px;
+}
+
+.request-field strong{
+    font-size:11px;
+    font-weight:normal;
+    word-break:break-word;
+}
+
+.request-extra{
+    margin-top:10px;
+    padding:15px;
+    background:rgba(255,255,255,.02);
+    color:#666;
+    font-size:10px;
+    line-height:1.7;
+    word-break:break-word;
+}
+
+.request-extra strong{
+    color:#888;
+    font-size:8px;
+    letter-spacing:2px;
+}
+
+.request-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.empty-requests{
+    padding:50px;
+    text-align:center;
+    border:1px solid var(--line);
+    color:#444;
+    font-size:9px;
+    letter-spacing:3px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:45px 7vw;
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+    flex-wrap:wrap;
+    color:#444;
+    font-size:8px;
+    letter-spacing:2px;
+}
+
+.footer-links{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.footer-links a:hover{
+    color:#fff;
+}
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:850px){
+@media(max-width:800px){
 
-    nav ul{
+    .nav{
+        height:65px;
+    }
+
+    .nav-links{
         display:none;
+        position:absolute;
+        top:65px;
+        left:0;
+        width:100%;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:0;
+        background:#050505;
+        border-bottom:1px solid var(--line);
     }
 
-    nav{
-        padding:0 6%;
+    .nav-links.open{
+        display:flex;
     }
 
-    .hero{
-        padding:130px 7% 90px;
+    .nav-links a{
+        width:100%;
+        padding:18px 7vw;
+        border-bottom:1px solid var(--line);
     }
 
-    h1{
-        font-size:19vw;
-        letter-spacing:-5px;
-    }
-
-    .hero-lines{
-        opacity:.25;
-        right:-100px;
-    }
-
-    .section{
-        padding:100px 7%;
-    }
-
-    .section-top{
+    .menu{
         display:block;
     }
 
-    .section-top p{
-        margin-top:20px;
+    .hero{
+        padding-top:110px;
     }
 
-    .story{
-        grid-template-columns:1fr;
+    .hero-title{
+        letter-spacing:-6px;
+    }
+
+    .hero-status{
+        display:none;
     }
 
     .levels{
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:1fr;
     }
 
     .features{
         grid-template-columns:1fr;
     }
 
-    .social{
-        grid-template-columns:1fr;
-    }
-
-    .cta{
-        margin-left:5%;
-        margin-right:5%;
-    }
-
-    footer{
-        flex-direction:column;
-        text-align:center;
-    }
-
     .page{
-        padding:130px 7% 80px;
+        padding-left:6vw;
+        padding-right:6vw;
     }
-}
 
-@media(max-width:520px){
+    .page-title{
+        letter-spacing:-4px;
+    }
 
-    .levels{
+    .quote{
+        margin-top:80px;
+        padding:70px 0;
+    }
+
+    .dev-stats{
         grid-template-columns:1fr;
     }
 
-    .hero-meta{
-        display:none;
+    .request-info{
+        grid-template-columns:1fr;
     }
 
-    .cta{
-        padding:60px 30px;
+    .dev-search{
+        flex-direction:column;
     }
 
     .form-box{
         padding:25px;
+    }
+}
+
+@media(max-width:480px){
+
+    .hero-title{
+        font-size:58px;
+    }
+
+    .page-title{
+        font-size:55px;
+    }
+
+    .hero-description{
+        font-size:11px;
+    }
+
+    footer{
+        flex-direction:column;
     }
 }
 </style>
@@ -796,52 +903,34 @@ footer a:hover{
 
 <body>
 
-<div id="particles"></div>
+<nav class="nav">
 
-<nav>
-
-    <a class="logo" href="#home">
-        <div class="logo-icon"></div>
-        FORGED FEAR
+    <a href="#home" class="logo">
+        FORGED<span>//</span>FEAR
     </a>
 
-    <ul>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#levels">LEVELS</a></li>
-        <li><a href="#features">FEATURES</a></li>
-        <li><a href="#community">COMMUNITY</a></li>
-    </ul>
+    <button class="menu" id="menuButton">
+        MENU
+    </button>
 
-    <a class="nav-button" href="https://discord.gg/TCCTKRGQcs" target="_blank">
-        DISCORD
-    </a>
+    <div class="nav-links" id="navLinks">
+
+        <a href="#home">HOME</a>
+        <a href="#levels">LEVELS</a>
+        <a href="#features">FEATURES</a>
+        <a href="#data-deletion">DATA</a>
+        <a href="#privacypolicy">PRIVACY</a>
+
+    </div>
 
 </nav>
 
-
-<div id="app"></div>
-
+<main id="app"></main>
 
 <script>
 
-/* =========================
-   PARTICLES
-========================= */
-
-const particles=document.getElementById("particles");
-
-for(let i=0;i<70;i++){
-
-    const p=document.createElement("div");
-
-    p.className="particle";
-    p.style.left=Math.random()*100+"%";
-    p.style.animationDuration=(8+Math.random()*18)+"s";
-    p.style.animationDelay=(-Math.random()*20)+"s";
-    p.style.opacity=.1+Math.random()*.3;
-
-    particles.appendChild(p);
-}
+const API_URL =
+    "https://forgedfear-n34y.onrender.com";
 
 
 /* =========================
@@ -851,49 +940,48 @@ for(let i=0;i<70;i++){
 function footer(){
 
     return `
+
     <footer>
-        <span>© 2026 FORGED FEAR VR</span>
 
-        <span>
-            <a href="#privacypolicy">PRIVACY POLICY</a>
-            &nbsp; // &nbsp;
-            <a href="#data-deletion">DATA DELETION</a>
-        </span>
+        <div>
+            FORGED FEAR VR // ${new Date().getFullYear()}
+        </div>
 
-        <span>@FORGEDFEARVR</span>
+        <div class="footer-links">
+
+            <a href="#privacypolicy">
+                PRIVACY POLICY
+            </a>
+
+            <a href="#data-deletion">
+                DATA DELETION
+            </a>
+
+            <a
+                href="https://discord.gg/TCCTKRGQcs"
+                target="_blank"
+                rel="noopener">
+                DISCORD
+            </a>
+
+            <a
+                href="https://www.youtube.com/@forgedfearvr"
+                target="_blank"
+                rel="noopener">
+                YOUTUBE
+            </a>
+
+            <a
+                href="https://www.tiktok.com/@forgedfearvr"
+                target="_blank"
+                rel="noopener">
+                TIKTOK
+            </a>
+
+        </div>
+
     </footer>
-    `;
-}
 
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function navigation(){
-
-    return `
-    <nav>
-
-        <a class="logo" href="#home">
-            <div class="logo-icon"></div>
-            FORGED FEAR
-        </a>
-
-        <ul>
-            <li><a href="#about">ABOUT</a></li>
-            <li><a href="#levels">LEVELS</a></li>
-            <li><a href="#features">FEATURES</a></li>
-            <li><a href="#community">COMMUNITY</a></li>
-        </ul>
-
-        <a class="nav-button"
-           href="https://discord.gg/TCCTKRGQcs"
-           target="_blank">
-            DISCORD
-        </a>
-
-    </nav>
     `;
 }
 
@@ -908,37 +996,59 @@ return `
 
 <section class="hero" id="home">
 
-    <div class="hero-lines"></div>
+    <div class="hero-grid"></div>
 
     <div class="hero-content">
 
         <div class="kicker">
-            FIRST-PERSON VR HORROR
+            FFVR // IMMERSIVE HORROR EXPERIENCE
         </div>
 
-        <h1>
-            FORGED<br>
-            <span class="outline">FEAR</span>
+        <h1 class="hero-title">
+
+            <span class="solid">
+                FORGED
+            </span>
+
+            <span class="ghost">
+                FEAR
+            </span>
+
         </h1>
 
-        <p class="hero-text">
-            A first-person VR horror experience blending the unsettling mystery
-            of the <strong>Backrooms</strong> with the surreal atmosphere of
-            <strong>Dreamcore</strong>.
+        <p class="hero-description">
+
+            A first-person VR horror experience blending
+            the unsettling mystery of the Backrooms with
+            the surreal atmosphere of Dreamcore.
+
             <br><br>
-            You are alone. You are lost.
-            And the deeper you go, the less the world makes sense.
+
+            You are alone.
+
+            <br>
+
+            You are lost.
+
+            <br>
+
+            And the world around you is wrong.
+
         </p>
 
-        <div class="buttons">
+        <div class="hero-buttons">
 
-            <a class="button primary" href="#about">
-                ENTER THE EXPERIENCE
+            <a
+                href="#levels"
+                class="button primary">
+                ENTER THE MAZE
             </a>
 
-            <a class="button"
-               href="https://discord.gg/TCCTKRGQcs"
-               target="_blank">
+            <a
+                href="https://discord.gg/TCCTKRGQcs"
+                target="_blank"
+                rel="noopener"
+                class="button">
                 JOIN DISCORD
             </a>
 
@@ -946,269 +1056,247 @@ return `
 
     </div>
 
-    <div class="hero-meta">
-        <span>FFVR // PROJECT 001</span>
-        <span>11 LEVELS // UNKNOWN THREATS</span>
-        <span>VR EXPERIENCE</span>
+    <div class="hero-status">
+        SYSTEM // UNKNOWN // REALITY UNSTABLE
     </div>
 
 </section>
 
 
-<section class="section" id="about">
+<section class="page" id="levels">
 
-    <div class="section-top">
+    <div class="section">
 
-        <div>
-            <div class="number">01 // THE EXPERIENCE</div>
-            <h2>Something<br>Feels Wrong.</h2>
+        <div class="section-label">
+            01 // THE MAZE
         </div>
 
-        <p>
-            Trapped in a world that feels strangely familiar yet completely
-            wrong, you must navigate through impossible environments while
-            trying to understand what happened — and how to escape.
+        <h2 class="section-title">
+            11 LEVELS.<br>
+            <span class="outline">
+                ONE WAY OUT.
+            </span>
+        </h2>
+
+        <p class="section-text">
+
+            Forged Fear contains 11 handcrafted levels,
+            each with its own environment, sounds,
+            visual identity and hidden dangers.
+
+            <br><br>
+
+            From endless fluorescent corridors and
+            abandoned facilities to impossible dream-like
+            spaces, every level is designed to make you
+            question what is real.
+
         </p>
 
-    </div>
+        <div class="levels">
 
-    <div class="story">
-
-        <div class="story-box">
-
-            <h3>Lost.</h3>
-
-            <p>
-                There is no map telling you where to go.
-                No voice telling you what to do.
-                No guarantee that the room you entered will still exist
-                when you turn around.
-                <br><br>
-                Explore abandoned facilities, endless fluorescent corridors,
-                surreal dream-like spaces and places that shouldn't exist.
-            </p>
-
-            <div class="story-decoration"></div>
-
-        </div>
-
-        <div class="story-box">
-
-            <h3>Alone.</h3>
-
-            <p>
-                Forged Fear isn't about becoming an unstoppable hero.
-                You are vulnerable, isolated and surrounded by the unknown.
-                <br><br>
-                Listen carefully. Watch your surroundings.
-                And remember that sometimes the scariest thing
-                is not knowing what is watching you.
-            </p>
-
-            <div class="story-decoration"></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="levels">
-
-    <div class="section-top">
-
-        <div>
-            <div class="number">02 // THE MAZE</div>
-            <h2>11 Levels.<br>11 Worlds.</h2>
-        </div>
-
-        <p>
-            Eleven handcrafted environments, each with its own visual identity,
-            sounds, atmosphere and hidden dangers.
-        </p>
-
-    </div>
-
-    <div class="levels">
-
-        ${[
-            "The Beginning",
-            "Unknown",
-            "Lost Facility",
-            "Dream State",
-            "Endless Hall",
-            "Unknown",
-            "Forgotten",
-            "Reality?",
-            "Unknown",
-            "The Deeper",
-            "???"
-        ].map((name,i)=>`
             <div class="level">
-                <span class="level-number">
-                    LEVEL ${String(i+1).padStart(2,"0")}
-                </span>
-                <h3>${name}</h3>
+                <div class="level-number">LEVEL // 01</div>
+                <h3>The Familiar</h3>
+                <p>IT FEELS LIKE YOU'VE BEEN HERE BEFORE.</p>
             </div>
-        `).join("")}
+
+            <div class="level">
+                <div class="level-number">LEVEL // 02</div>
+                <h3>Dead Facility</h3>
+                <p>THE MACHINES ARE STILL RUNNING.</p>
+            </div>
+
+            <div class="level">
+                <div class="level-number">LEVEL // 03</div>
+                <h3>Endless Hall</h3>
+                <p>THERE IS NO END.</p>
+            </div>
+
+            <div class="level">
+                <div class="level-number">LEVEL // 04</div>
+                <h3>Dreamspace</h3>
+                <p>THE RULES HAVE CHANGED.</p>
+            </div>
+
+            <div class="level">
+                <div class="level-number">LEVEL // 05</div>
+                <h3>Unknown</h3>
+                <p>DO NOT TRUST WHAT YOU SEE.</p>
+            </div>
+
+            <div class="level">
+                <div class="level-number">LEVEL // 06—11</div>
+                <h3>REDACTED</h3>
+                <p>ACCESS DENIED.</p>
+            </div>
+
+        </div>
 
     </div>
 
 </section>
 
 
-<section class="quote">
+<section class="page" id="features">
 
-    <div class="quote-symbol">"</div>
+    <div class="section">
 
-    <h2>
-        THE DEEPER YOU GO,
-        THE LESS THE WORLD
-        MAKES SENSE.
-    </h2>
-
-    <p>CAN YOU ESCAPE THE MAZE?</p>
-
-</section>
-
-
-<section class="section" id="features">
-
-    <div class="section-top">
-
-        <div>
-            <div class="number">03 // FEATURES</div>
-            <h2>Built For<br>Immersion.</h2>
+        <div class="section-label">
+            02 // EXPERIENCE
         </div>
 
-        <p>
-            Designed specifically for virtual reality, Forged Fear uses
-            atmosphere and presence to make the player feel truly trapped
-            inside the world.
+        <h2 class="section-title">
+            BUILT TO<br>
+            <span class="outline">
+                TERRIFY.
+            </span>
+        </h2>
+
+        <p class="section-text">
+
+            Forged Fear is built specifically for virtual
+            reality, focusing on immersion, atmosphere
+            and psychological tension rather than power.
+
         </p>
 
-    </div>
+        <div class="features">
 
-    <div class="features">
+            <div class="feature">
 
-        <div class="feature">
-            <div class="feature-icon">◈</div>
-            <h3>11 Handcrafted Levels</h3>
-            <p>
-                Eleven unique environments inspired by the Backrooms
-                and Dreamcore, each with its own atmosphere and dangers.
+                <div class="feature-number">
+                    01 // VR
+                </div>
+
+                <h3>
+                    Fully Immersive VR
+                </h3>
+
+                <p>
+                    Designed around the scale, movement and
+                    presence of virtual reality.
+                </p>
+
+            </div>
+
+            <div class="feature">
+
+                <div class="feature-number">
+                    02 // AUDIO
+                </div>
+
+                <h3>
+                    Spatial Audio
+                </h3>
+
+                <p>
+                    Sounds exist around you. Footsteps,
+                    distant noises and things you cannot see.
+                </p>
+
+            </div>
+
+            <div class="feature">
+
+                <div class="feature-number">
+                    03 // WORLD
+                </div>
+
+                <h3>
+                    Unsettling Environments
+                </h3>
+
+                <p>
+                    Every area has a distinct visual identity
+                    designed to feel familiar and completely wrong.
+                </p>
+
+            </div>
+
+            <div class="feature">
+
+                <div class="feature-number">
+                    04 // SECRETS
+                </div>
+
+                <h3>
+                    Hidden Dangers
+                </h3>
+
+                <p>
+                    Not everything is visible. Explore carefully
+                    and discover what the maze is hiding.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="quote">
+
+            <div class="quote-text">
+
+                The deeper you go,
+
+                <br>
+
+                <span>
+                    the less the world makes sense.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div style="margin-top:100px">
+
+            <div class="section-label">
+                03 // COMMUNITY
+            </div>
+
+            <h2 class="section-title">
+                DON'T GET<br>
+                <span class="outline">
+                    LOST ALONE.
+                </span>
+            </h2>
+
+            <p class="section-text">
+
+                Follow Forged Fear for development updates,
+                videos, secrets and future announcements.
+
             </p>
+
+            <div class="social">
+
+                <a
+                    href="https://www.youtube.com/@forgedfearvr"
+                    target="_blank"
+                    rel="noopener">
+                    YOUTUBE
+                </a>
+
+                <a
+                    href="https://www.tiktok.com/@forgedfearvr"
+                    target="_blank"
+                    rel="noopener">
+                    TIKTOK
+                </a>
+
+                <a
+                    href="https://discord.gg/TCCTKRGQcs"
+                    target="_blank"
+                    rel="noopener">
+                    DISCORD
+                </a>
+
+            </div>
+
         </div>
-
-        <div class="feature">
-            <div class="feature-icon">◎</div>
-            <h3>Full VR Immersion</h3>
-            <p>
-                Realistic scale, physical presence and virtual reality
-                interaction designed to make the world feel real.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">⌁</div>
-            <h3>Spatial Audio</h3>
-            <p>
-                Atmospheric sound design surrounds you from every direction.
-                Sometimes hearing something is worse than seeing it.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">?</div>
-            <h3>Hidden Secrets</h3>
-            <p>
-                Explore carefully. Hidden details, unexpected encounters
-                and secrets are waiting throughout the maze.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="community">
-
-    <div class="section-top">
-
-        <div>
-            <div class="number">04 // COMMUNITY</div>
-            <h2>Find Us.</h2>
-        </div>
-
-        <p>
-            Follow Forged Fear for development updates, gameplay,
-            behind-the-scenes content and announcements.
-        </p>
-
-    </div>
-
-    <div class="social">
-
-        <a class="social-card"
-           href="https://www.youtube.com/@forgedfearvr"
-           target="_blank">
-
-            <span>VIDEO // YOUTUBE</span>
-            <h3>@forgedfearvr</h3>
-
-        </a>
-
-        <a class="social-card"
-           href="https://www.tiktok.com/@forgedfearvr"
-           target="_blank">
-
-            <span>SHORT FORM // TIKTOK</span>
-            <h3>@forgedfearvr</h3>
-
-        </a>
-
-        <a class="social-card"
-           href="https://discord.gg/TCCTKRGQcs"
-           target="_blank">
-
-            <span>COMMUNITY // DISCORD</span>
-            <h3>JOIN THE SERVER</h3>
-
-        </a>
-
-    </div>
-
-</section>
-
-
-<section class="cta">
-
-    <div class="number">05 // FINAL WARNING</div>
-
-    <h2>
-        CAN YOU ESCAPE
-        THE MAZE?
-    </h2>
-
-    <p>
-        Or was the fear forged for you all along?
-    </p>
-
-    <div class="buttons">
-
-        <a class="button primary"
-           href="https://discord.gg/TCCTKRGQcs"
-           target="_blank">
-            ENTER THE COMMUNITY
-        </a>
-
-        <a class="button"
-           href="https://www.youtube.com/@forgedfearvr"
-           target="_blank">
-            WATCH FORGED FEAR
-        </a>
 
     </div>
 
@@ -1233,167 +1321,185 @@ return `
 
     <div class="page-header">
 
-        <div class="number">FFVR // LEGAL</div>
+        <div class="number">
+            FFVR // LEGAL
+        </div>
 
         <h1 class="page-title">
+
             Privacy<br>
-            <span class="outline">Policy</span>
+
+            <span class="outline">
+                Policy
+            </span>
+
         </h1>
 
         <p class="page-subtitle">
-            Your privacy matters. Forged Fear is designed to collect
-            only the limited information required to provide the game
-            and maintain player functionality.
+            Last updated: August 20, 2026
         </p>
 
     </div>
 
 
-    <div class="policy">
+    <div class="section">
 
         <div class="notice">
-            <strong>Last Updated: August 20, 2026</strong><br><br>
-            This Privacy Policy explains what information Forged Fear VR
-            may store and how that information is used.
-        </div>
 
+            <strong>
+                FORGED FEAR VR
+            </strong>
 
-        <div class="policy-section">
+            <br><br>
 
-            <h3>01 // Information We Store</h3>
-
-            <p>
-                Forged Fear currently stores limited player information
-                associated with gameplay.
-            </p>
-
-            <ul>
-                <li>PlayFab Player ID</li>
-                <li>In-game username</li>
-            </ul>
-
-            <p style="margin-top:15px;">
-                Your in-game username may be changed by you through
-                the available game functionality.
-            </p>
+            Forged Fear is a virtual reality horror game.
+            We respect your privacy and aim to collect
+            as little information as possible.
 
         </div>
 
 
-        <div class="policy-section">
+        <div class="feature">
 
-            <h3>02 // What We Do Not Intentionally Collect</h3>
-
-            <p>
-                Forged Fear does not intentionally request or require
-                information such as your real name, home address,
-                telephone number, payment information, or email address
-                solely for playing the game.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>03 // Why We Use This Information</h3>
-
-            <p>
-                The PlayFab Player ID and username may be used to
-                identify your player profile, provide gameplay-related
-                functionality, maintain player data, and support
-                multiplayer or online features.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>04 // PlayFab</h3>
-
-            <p>
-                Forged Fear uses Microsoft PlayFab for certain online
-                game services. Information processed through PlayFab
-                may be subject to Microsoft's own privacy policies
-                and terms.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>05 // Third-Party Services</h3>
-
-            <p>
-                Forged Fear maintains public community and social media
-                accounts, including Discord, YouTube and TikTok.
-                Visiting or interacting with those services is governed
-                by the privacy policies of the respective platforms.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>06 // Data Security</h3>
-
-            <p>
-                We take reasonable measures to protect the limited
-                player information used by Forged Fear. However,
-                no online service can guarantee absolute security.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>07 // Data Deletion</h3>
-
-            <p>
-                You may request deletion of player data associated
-                with Forged Fear. To submit a request, visit our
-                <a href="#data-deletion">Data Deletion page</a>.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>08 // Changes To This Policy</h3>
-
-            <p>
-                This Privacy Policy may be updated if Forged Fear's
-                services or data practices change. The latest version
-                will always be published on this page.
-            </p>
-
-        </div>
-
-
-        <div class="policy-section">
-
-            <h3>09 // Contact</h3>
-
-            <p>
-                If you have questions about privacy or your data,
-                you can contact the Forged Fear team through the
-                official community Discord.
-            </p>
-
-            <div class="buttons">
-
-                <a class="button"
-                   href="https://discord.gg/TCCTKRGQcs"
-                   target="_blank">
-                    CONTACT US ON DISCORD
-                </a>
-
+            <div class="feature-number">
+                01 // INFORMATION WE USE
             </div>
+
+            <h3>
+                Player Information
+            </h3>
+
+            <p>
+
+                Forged Fear may use your in-game username
+                and PlayFab Player ID to provide game-related
+                functionality and identify your player account.
+
+                <br><br>
+
+                Your in-game username can be changed.
+
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="feature">
+
+            <div class="feature-number">
+                02 // WHAT WE DO NOT COLLECT
+            </div>
+
+            <h3>
+                Minimal Data
+            </h3>
+
+            <p>
+
+                We do not intentionally collect sensitive
+                personal information through the Forged Fear
+                website.
+
+                <br><br>
+
+                We do not ask players to provide passwords,
+                payment information, home addresses or other
+                sensitive personal information through the
+                data deletion form.
+
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="feature">
+
+            <div class="feature-number">
+                03 // DATA DELETION
+            </div>
+
+            <h3>
+                Your Request
+            </h3>
+
+            <p>
+
+                If you want your player data removed, you can
+                submit a data deletion request through our
+                Data Deletion page.
+
+                <br><br>
+
+                Requests are stored so that the development
+                team can review and process them.
+
+            </p>
+
+            <br>
+
+            <a
+                href="#data-deletion"
+                class="button">
+                REQUEST DATA DELETION
+            </a>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="feature">
+
+            <div class="feature-number">
+                04 // THIRD PARTIES
+            </div>
+
+            <h3>
+                Services
+            </h3>
+
+            <p>
+
+                Forged Fear may use third-party services
+                required to operate the game and its online
+                functionality, including PlayFab.
+
+                <br><br>
+
+                These services may process information
+                according to their own privacy policies.
+
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="feature">
+
+            <div class="feature-number">
+                05 // CONTACT
+            </div>
+
+            <h3>
+                Questions
+            </h3>
+
+            <p>
+
+                For privacy-related questions or concerns,
+                contact the Forged Fear development team.
+
+            </p>
 
         </div>
 
@@ -1420,16 +1526,25 @@ return `
 
     <div class="page-header">
 
-        <div class="number">FFVR // PLAYER DATA</div>
+        <div class="number">
+            FFVR // PLAYER DATA
+        </div>
 
         <h1 class="page-title">
+
             Data<br>
-            <span class="outline">Deletion</span>
+
+            <span class="outline">
+                Deletion
+            </span>
+
         </h1>
 
         <p class="page-subtitle">
-            Want your Forged Fear player data removed?
-            Submit a request below.
+
+            Request deletion of the player data
+            associated with your Forged Fear account.
+
         </p>
 
     </div>
@@ -1439,18 +1554,25 @@ return `
 
         <div class="notice">
 
-            <strong>What can be deleted?</strong>
+            <strong>
+                DATA DELETION REQUEST
+            </strong>
 
             <br><br>
 
-            You can request deletion of player information associated
-            with your Forged Fear profile, such as your PlayFab Player ID
-            and in-game username.
+            We currently use your PlayFab Player ID
+            and in-game username to identify your
+            player profile.
 
             <br><br>
 
-            We may need enough information to identify the correct
-            player account before processing a request.
+            Please make sure the information you submit
+            is accurate.
+
+            <br><br>
+
+            Do not submit passwords, payment information,
+            or other sensitive information.
 
         </div>
 
@@ -1467,8 +1589,8 @@ return `
 
                     <input
                         id="playfab"
-                        name="playfab"
                         type="text"
+                        maxlength="255"
                         placeholder="Enter your PlayFab ID"
                         required
                     >
@@ -1484,8 +1606,8 @@ return `
 
                     <input
                         id="username"
-                        name="username"
                         type="text"
+                        maxlength="255"
                         placeholder="Enter your current username"
                         required
                     >
@@ -1501,8 +1623,8 @@ return `
 
                     <textarea
                         id="reason"
-                        name="reason"
-                        placeholder="Tell us anything that may help identify your account..."
+                        maxlength="5000"
+                        placeholder="Anything that may help us identify your account..."
                     ></textarea>
 
                 </div>
@@ -1510,43 +1632,48 @@ return `
 
                 <div class="form-note">
 
-                    By submitting this request, you are asking the
-                    Forged Fear team to review and process a request
-                    to delete the player data associated with the
-                    information provided.
-
-                    <br><br>
-
-                    Please do not submit passwords or other sensitive
-                    information through this form.
+                    By submitting this request, you are asking
+                    the Forged Fear development team to review
+                    and process the deletion of your player data.
 
                 </div>
 
 
-                <button class="button primary" type="submit">
+                <button
+                    class="button primary"
+                    type="submit"
+                    id="deletionSubmit">
+
                     SUBMIT DELETION REQUEST
+
                 </button>
 
 
-                <div class="success" id="successMessage">
+                <div
+                    class="dev-error"
+                    id="deletionError">
+                </div>
+
+
+                <div
+                    class="success"
+                    id="successMessage">
 
                     REQUEST RECEIVED.
 
                     <br><br>
 
-                    Your request has been prepared. This demo form does
-                    not currently transmit information to a server.
-
-                    Please contact the Forged Fear team through Discord
-                    to actually submit your deletion request.
+                    Your deletion request has been securely
+                    recorded.
 
                     <br><br>
 
-                    <a href="https://discord.gg/TCCTKRGQcs"
-                       target="_blank"
-                       style="color:#fff;">
-                        OPEN FORGED FEAR DISCORD →
-                    </a>
+                    REQUEST ID:
+                    <strong id="requestId"></strong>
+
+                    <br><br>
+
+                    Keep this number for your records.
 
                 </div>
 
@@ -1566,126 +1693,1380 @@ ${footer()}
 
 
 /* =========================
-   ROUTER
+   DEV PAGE
+========================= */
+
+function devPage(){
+
+return `
+
+<section class="page">
+
+    <div class="page-header">
+
+        <div class="number">
+            FFVR // INTERNAL SYSTEM
+        </div>
+
+        <h1 class="page-title">
+
+            Dev<br>
+
+            <span class="outline">
+                Section
+            </span>
+
+        </h1>
+
+        <p class="page-subtitle">
+
+            Restricted developer area.
+            Authorized personnel only.
+
+        </p>
+
+    </div>
+
+
+    <div id="devContent"></div>
+
+</section>
+
+${footer()}
+
+`;
+
+}
+
+
+/* =========================
+   ROUTING
 ========================= */
 
 function getRoute(){
 
-    let hash=window.location.hash
-        .replace("#","")
-        .toLowerCase();
+    let hash =
+        window.location.hash
+            .replace("#","")
+            .toLowerCase();
 
-    if(hash==="privacypolicy"){
+    if(hash === "privacypolicy"){
         return "privacy";
     }
 
-    if(hash==="data-deletion"){
+    if(hash === "data-deletion"){
         return "deletion";
+    }
+
+    if(hash === "devsection"){
+        return "dev";
+    }
+
+    if(hash === "levels"){
+        return "home";
+    }
+
+    if(hash === "features"){
+        return "home";
     }
 
     return "home";
 }
 
 
+/* =========================
+   RENDER
+========================= */
+
 function render(){
 
-    const app=document.getElementById("app");
+    const app =
+        document.getElementById("app");
 
-    const route=getRoute();
+    const route =
+        getRoute();
 
-    if(route==="privacy"){
-        app.innerHTML=privacyPage();
+
+    if(route === "privacy"){
+
+        app.innerHTML =
+            privacyPage();
+
     }
 
-    else if(route==="deletion"){
-        app.innerHTML=deletionPage();
+    else if(route === "deletion"){
+
+        app.innerHTML =
+            deletionPage();
+
+    }
+
+    else if(route === "dev"){
+
+        app.innerHTML =
+            devPage();
+
     }
 
     else{
-        app.innerHTML=homePage();
+
+        app.innerHTML =
+            homePage();
+
     }
+
 
     window.scrollTo(0,0);
 
     setupPage();
 
-}
 
+    if(route === "dev"){
 
-function setupPage(){
-
-    document.querySelectorAll(".hero-lines").forEach(lines=>{
-
-        document.addEventListener("mousemove",e=>{
-
-            const x=(e.clientX/window.innerWidth-.5)*8;
-            const y=(e.clientY/window.innerHeight-.5)*8;
-
-            lines.style.transform=
-                `perspective(600px) rotateY(${-25+x}deg) translate(${x}px,${y}px)`;
-
-        });
-
-    });
-
-
-    const deletionForm=document.getElementById("deletionForm");
-
-    if(deletionForm){
-
-        deletionForm.addEventListener("submit",function(e){
-
-            e.preventDefault();
-
-            const success=document.getElementById("successMessage");
-
-            success.style.display="block";
-
-            success.scrollIntoView({
-                behavior:"smooth",
-                block:"center"
-            });
-
-        });
+        renderDevContent();
 
     }
+
 }
 
 
 /* =========================
-   ROUTE LINKS
+   MOBILE MENU
 ========================= */
 
-document.addEventListener("click",function(e){
+function setupMenu(){
 
-    const link=e.target.closest('a[href^="#"]');
+    const button =
+        document.getElementById(
+            "menuButton"
+        );
 
-    if(!link) return;
+    const links =
+        document.getElementById(
+            "navLinks"
+        );
 
-    const href=link.getAttribute("href");
+    if(!button || !links){
+        return;
+    }
 
-    if(
-        href==="#home" ||
-        href==="#privacypolicy" ||
-        href==="#data-deletion"
-    ){
+    button.addEventListener(
+        "click",
+        function(){
 
-        e.preventDefault();
+            links.classList.toggle(
+                "open"
+            );
 
-        window.location.hash=href.substring(1);
+        }
+    );
 
-        render();
+
+    links
+        .querySelectorAll("a")
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    function(){
+
+                        links.classList.remove(
+                            "open"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================
+   PAGE SETUP
+========================= */
+
+function setupPage(){
+
+    setupMenu();
+
+
+    const deletionForm =
+        document.getElementById(
+            "deletionForm"
+        );
+
+
+    if(deletionForm){
+
+        deletionForm.addEventListener(
+            "submit",
+            async function(e){
+
+                e.preventDefault();
+
+
+                const submit =
+                    document.getElementById(
+                        "deletionSubmit"
+                    );
+
+                const errorBox =
+                    document.getElementById(
+                        "deletionError"
+                    );
+
+                const success =
+                    document.getElementById(
+                        "successMessage"
+                    );
+
+
+                const playfab =
+                    document.getElementById(
+                        "playfab"
+                    ).value.trim();
+
+                const username =
+                    document.getElementById(
+                        "username"
+                    ).value.trim();
+
+                const additionalInfo =
+                    document.getElementById(
+                        "reason"
+                    ).value.trim();
+
+
+                if(!playfab || !username){
+
+                    errorBox.textContent =
+                        "PlayFab ID and username are required.";
+
+                    return;
+
+                }
+
+
+                submit.disabled =
+                    true;
+
+                submit.textContent =
+                    "SUBMITTING...";
+
+                errorBox.textContent =
+                    "";
+
+
+                try{
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/api/deletion-request`,
+                            {
+                                method:"POST",
+
+                                headers:{
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:JSON.stringify({
+
+                                    playfab_id:
+                                        playfab,
+
+                                    username:
+                                        username,
+
+                                    additional_info:
+                                        additionalInfo
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if(!response.ok){
+
+                        throw new Error(
+                            data.error ||
+                            "Request could not be submitted."
+                        );
+
+                    }
+
+
+                    success.style.display =
+                        "block";
+
+                    document.getElementById(
+                        "requestId"
+                    ).textContent =
+                        "#" + data.request_id;
+
+
+                    deletionForm.reset();
+
+                    submit.style.display =
+                        "none";
+
+
+                }
+                catch(error){
+
+                    errorBox.textContent =
+                        error.message ||
+                        "Could not connect to the Forged Fear server.";
+
+                    submit.disabled =
+                        false;
+
+                    submit.textContent =
+                        "SUBMIT DELETION REQUEST";
+
+                }
+
+            }
+        );
 
     }
 
-});
+}
 
 
-window.addEventListener("hashchange",render);
+/* =========================
+   DEV AUTH
+========================= */
 
-render();
+function renderDevContent(){
+
+    const container =
+        document.getElementById(
+            "devContent"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "forgedFearDevToken"
+        );
+
+
+    if(!token){
+
+        container.innerHTML = `
+
+        <div class="dev-login">
+
+            <div class="dev-warning">
+
+                RESTRICTED AREA
+
+                <br><br>
+
+                This section is for authorized
+                Forged Fear developers only.
+
+                <br><br>
+
+                Unauthorized access attempts may
+                be logged by the server.
+
+            </div>
+
+
+            <div class="dev-login-box">
+
+                <form id="devLoginForm">
+
+                    <div class="form-group">
+
+                        <label for="devPassword">
+                            Developer Password
+                        </label>
+
+                        <input
+                            id="devPassword"
+                            type="password"
+                            autocomplete="current-password"
+                            placeholder="Enter developer password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        class="button primary"
+                        type="submit">
+
+                        AUTHENTICATE
+
+                    </button>
+
+
+                    <div
+                        class="dev-error"
+                        id="devLoginError">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        `;
+
+
+        setupDevLogin();
+
+        return;
+
+    }
+
+
+    renderDevDashboard();
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function setupDevLogin(){
+
+    const form =
+        document.getElementById(
+            "devLoginForm"
+        );
+
+
+    if(!form){
+        return;
+    }
+
+
+    form.addEventListener(
+        "submit",
+        async function(e){
+
+            e.preventDefault();
+
+
+            const password =
+                document.getElementById(
+                    "devPassword"
+                ).value;
+
+
+            const errorBox =
+                document.getElementById(
+                    "devLoginError"
+                );
+
+
+            errorBox.textContent =
+                "AUTHENTICATING...";
+
+
+            try{
+
+                const response =
+                    await fetch(
+                        `${API_URL}/api/dev/login`,
+                        {
+                            method:"POST",
+
+                            headers:{
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:JSON.stringify({
+                                password:password
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if(!response.ok){
+
+                    errorBox.textContent =
+                        data.error ||
+                        "Authentication failed.";
+
+                    return;
+
+                }
+
+
+                localStorage.setItem(
+                    "forgedFearDevToken",
+                    data.token
+                );
+
+
+                renderDevContent();
+
+            }
+            catch(error){
+
+                errorBox.textContent =
+                    "Could not connect to the server.";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+async function renderDevDashboard(){
+
+    const container =
+        document.getElementById(
+            "devContent"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    container.innerHTML = `
+
+    <div class="dev-dashboard">
+
+        <div class="dev-topbar">
+
+            <div>
+
+                <div class="number">
+                    SYSTEM // ONLINE
+                </div>
+
+                <h2>
+                    DELETION REQUESTS
+                </h2>
+
+            </div>
+
+
+            <button
+                class="small-button"
+                id="devLogout">
+
+                LOGOUT
+
+            </button>
+
+        </div>
+
+
+        <div class="dev-stats">
+
+            <div class="dev-stat">
+
+                <span>
+                    PENDING
+                </span>
+
+                <strong id="pendingCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="dev-stat">
+
+                <span>
+                    COMPLETED
+                </span>
+
+                <strong id="completedCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="dev-stat">
+
+                <span>
+                    TOTAL
+                </span>
+
+                <strong id="totalCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="dev-search">
+
+            <input
+                id="requestSearch"
+                type="text"
+                placeholder="Search PlayFab ID or username..."
+            >
+
+
+            <button
+                class="small-button"
+                id="searchRequests">
+
+                SEARCH
+
+            </button>
+
+
+            <button
+                class="small-button"
+                id="refreshRequests">
+
+                REFRESH
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="requests"
+            id="requestsContainer">
+
+            <div class="empty-requests">
+                LOADING...
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    document.getElementById(
+        "devLogout"
+    ).addEventListener(
+        "click",
+        devLogout
+    );
+
+
+    document.getElementById(
+        "searchRequests"
+    ).addEventListener(
+        "click",
+        loadRequests
+    );
+
+
+    document.getElementById(
+        "refreshRequests"
+    ).addEventListener(
+        "click",
+        loadRequests
+    );
+
+
+    document.getElementById(
+        "requestSearch"
+    ).addEventListener(
+        "keydown",
+        function(e){
+
+            if(e.key === "Enter"){
+                loadRequests();
+            }
+
+        }
+    );
+
+
+    loadRequests();
+
+}
+
+
+/* =========================
+   LOAD REQUESTS
+========================= */
+
+async function loadRequests(){
+
+    const token =
+        localStorage.getItem(
+            "forgedFearDevToken"
+        );
+
+
+    if(!token){
+
+        renderDevContent();
+
+        return;
+
+    }
+
+
+    const container =
+        document.getElementById(
+            "requestsContainer"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    container.innerHTML = `
+        <div class="empty-requests">
+            LOADING...
+        </div>
+    `;
+
+
+    const search =
+        document.getElementById(
+            "requestSearch"
+        )?.value.trim() || "";
+
+
+    try{
+
+        let url =
+            `${API_URL}/api/dev/deletion-requests`;
+
+
+        if(search){
+
+            url +=
+                "?search=" +
+                encodeURIComponent(search);
+
+        }
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    headers:{
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        if(response.status === 401){
+
+            localStorage.removeItem(
+                "forgedFearDevToken"
+            );
+
+            renderDevContent();
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(!response.ok){
+
+            container.innerHTML = `
+                <div class="empty-requests">
+                    FAILED TO LOAD REQUESTS
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        updateStats(
+            data.requests
+        );
+
+
+        renderRequests(
+            data.requests
+        );
+
+
+    }
+    catch(error){
+
+        container.innerHTML = `
+            <div class="empty-requests">
+                SERVER CONNECTION FAILED
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(requests){
+
+    const pending =
+        requests.filter(
+            request =>
+                request.status === "pending"
+        ).length;
+
+
+    const completed =
+        requests.filter(
+            request =>
+                request.status === "completed"
+        ).length;
+
+
+    const total =
+        requests.length;
+
+
+    const pendingElement =
+        document.getElementById(
+            "pendingCount"
+        );
+
+
+    const completedElement =
+        document.getElementById(
+            "completedCount"
+        );
+
+
+    const totalElement =
+        document.getElementById(
+            "totalCount"
+        );
+
+
+    if(pendingElement){
+        pendingElement.textContent =
+            pending;
+    }
+
+
+    if(completedElement){
+        completedElement.textContent =
+            completed;
+    }
+
+
+    if(totalElement){
+        totalElement.textContent =
+            total;
+    }
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+    return String(
+        value ?? ""
+    )
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   RENDER REQUESTS
+========================= */
+
+function renderRequests(requests){
+
+    const container =
+        document.getElementById(
+            "requestsContainer"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    if(!requests.length){
+
+        container.innerHTML = `
+
+            <div class="empty-requests">
+                NO DELETION REQUESTS FOUND
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        requests.map(
+            request => {
+
+                const date =
+                    request.created_at
+                    ? new Date(
+                        request.created_at
+                    ).toLocaleString()
+                    : "UNKNOWN";
+
+
+                return `
+
+                <div class="request-card">
+
+                    <div class="request-header">
+
+                        <div class="request-id">
+
+                            REQUEST #${escapeHtml(
+                                request.id
+                            )}
+
+                        </div>
+
+
+                        <div class="status ${escapeHtml(
+                            request.status
+                        )}">
+
+                            ${escapeHtml(
+                                request.status
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="request-info">
+
+                        <div class="request-field">
+
+                            <span>
+                                PLAYFAB ID
+                            </span>
+
+                            <strong>
+                                ${escapeHtml(
+                                    request.playfab_id
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="request-field">
+
+                            <span>
+                                USERNAME
+                            </span>
+
+                            <strong>
+                                ${escapeHtml(
+                                    request.username
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="request-field">
+
+                            <span>
+                                SUBMITTED
+                            </span>
+
+                            <strong>
+                                ${escapeHtml(
+                                    date
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="request-field">
+
+                            <span>
+                                STATUS
+                            </span>
+
+                            <strong>
+                                ${escapeHtml(
+                                    request.status
+                                ).toUpperCase()}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    ${
+                        request.additional_info
+                        ?
+                        `
+
+                        <div class="request-extra">
+
+                            <strong>
+                                ADDITIONAL INFORMATION
+                            </strong>
+
+                            <br><br>
+
+                            ${escapeHtml(
+                                request.additional_info
+                            )}
+
+                        </div>
+
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <div class="request-actions">
+
+                        ${
+                            request.status !== "pending"
+                            ?
+                            `
+
+                            <button
+                                class="small-button"
+                                onclick="updateRequest(
+                                    ${request.id},
+                                    'pending'
+                                )">
+
+                                PENDING
+
+                            </button>
+
+                            `
+                            :
+                            ""
+                        }
+
+
+                        ${
+                            request.status !== "completed"
+                            ?
+                            `
+
+                            <button
+                                class="small-button"
+                                onclick="updateRequest(
+                                    ${request.id},
+                                    'completed'
+                                )">
+
+                                COMPLETED
+
+                            </button>
+
+                            `
+                            :
+                            ""
+                        }
+
+
+                        ${
+                            request.status !== "rejected"
+                            ?
+                            `
+
+                            <button
+                                class="small-button"
+                                onclick="updateRequest(
+                                    ${request.id},
+                                    'rejected'
+                                )">
+
+                                REJECT
+
+                            </button>
+
+                            `
+                            :
+                            ""
+                        }
+
+
+                        <button
+                            class="small-button"
+                            onclick="deleteRequest(
+                                ${request.id}
+                            )">
+
+                            DELETE REQUEST
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================
+   UPDATE REQUEST
+========================= */
+
+async function updateRequest(
+    requestId,
+    status
+){
+
+    const token =
+        localStorage.getItem(
+            "forgedFearDevToken"
+        );
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}/api/dev/deletion-requests/${requestId}`,
+                {
+                    method:"PATCH",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    },
+
+                    body:JSON.stringify({
+                        status:status
+                    })
+                }
+            );
+
+
+        if(response.status === 401){
+
+            localStorage.removeItem(
+                "forgedFearDevToken"
+            );
+
+            renderDevContent();
+
+            return;
+
+        }
+
+
+        await loadRequests();
+
+    }
+    catch(error){
+
+        alert(
+            "Could not update the request."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   DELETE REQUEST
+========================= */
+
+async function deleteRequest(
+    requestId
+){
+
+    if(
+        !confirm(
+            "Delete this request record?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "forgedFearDevToken"
+        );
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}/api/dev/deletion-requests/${requestId}`,
+                {
+                    method:"DELETE",
+
+                    headers:{
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        if(response.status === 401){
+
+            localStorage.removeItem(
+                "forgedFearDevToken"
+            );
+
+            renderDevContent();
+
+            return;
+
+        }
+
+
+        await loadRequests();
+
+    }
+    catch(error){
+
+        alert(
+            "Could not delete the request."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function devLogout(){
+
+    const token =
+        localStorage.getItem(
+            "forgedFearDevToken"
+        );
+
+
+    try{
+
+        await fetch(
+            `${API_URL}/api/dev/logout`,
+            {
+                method:"POST",
+
+                headers:{
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+    }
+    catch(error){
+
+    }
+
+
+    localStorage.removeItem(
+        "forgedFearDevToken"
+    );
+
+
+    renderDevContent();
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener(
+    "hashchange",
+    render
+);
+
+
+window.addEventListener(
+    "load",
+    render
+);
 
 </script>
 
 </body>
-</html>
+    </html>
