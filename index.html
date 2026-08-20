@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050505">
-<meta name="description" content="Forged Fear VR — A first-person VR horror experience inspired by the Backrooms and Dreamcore.">
+<meta name="description" content="Forged Fear VR - A first-person VR horror experience inspired by the Backrooms and Dreamcore.">
 <title>FORGED FEAR VR</title>
 
 <style>
@@ -82,7 +81,7 @@ nav{
     align-items:center;
     justify-content:space-between;
     padding:0 6%;
-    background:rgba(5,5,5,.65);
+    background:rgba(5,5,5,.72);
     backdrop-filter:blur(18px);
     border-bottom:1px solid rgba(255,255,255,.07);
 }
@@ -94,6 +93,8 @@ nav{
     font-size:14px;
     font-weight:900;
     letter-spacing:4px;
+    color:#fff;
+    text-decoration:none;
 }
 
 .logo-icon{
@@ -130,7 +131,7 @@ nav a:hover{
     color:#fff;
 }
 
-.nav-discord{
+.nav-button{
     border:1px solid rgba(255,255,255,.2);
     padding:11px 18px;
     color:#fff!important;
@@ -147,16 +148,6 @@ nav a:hover{
     background:
         radial-gradient(circle at 75% 45%,rgba(180,180,180,.07),transparent 25%),
         radial-gradient(circle at 20% 80%,rgba(255,255,255,.025),transparent 30%);
-}
-
-.hero-image{
-    position:absolute;
-    inset:0;
-    z-index:-2;
-    opacity:.13;
-    background:
-        linear-gradient(90deg,#050505 0%,transparent 50%,#050505 100%),
-        linear-gradient(0deg,#050505 0%,transparent 60%,#050505 100%);
 }
 
 .hero-lines{
@@ -319,16 +310,9 @@ h2{
     min-height:440px;
     padding:45px;
     border:1px solid rgba(255,255,255,.08);
-    background:
-        linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+    background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
     position:relative;
     overflow:hidden;
-}
-
-.story-box:first-child{
-    background:
-        radial-gradient(circle at 70% 20%,rgba(255,255,255,.08),transparent 25%),
-        linear-gradient(145deg,#101010,#050505);
 }
 
 .story-box h3{
@@ -414,46 +398,6 @@ h2{
     top:-35px;
     border:1px solid rgba(255,255,255,.05);
     transform:rotate(45deg);
-}
-
-.level:nth-child(2){
-    background:linear-gradient(145deg,#12110c,#070707);
-}
-
-.level:nth-child(3){
-    background:linear-gradient(145deg,#0d1111,#050606);
-}
-
-.level:nth-child(4){
-    background:linear-gradient(145deg,#110d13,#060507);
-}
-
-.level:nth-child(5){
-    background:linear-gradient(145deg,#10100e,#060606);
-}
-
-.level:nth-child(6){
-    background:linear-gradient(145deg,#0c0d12,#050507);
-}
-
-.level:nth-child(7){
-    background:linear-gradient(145deg,#120e0e,#060505);
-}
-
-.level:nth-child(8){
-    background:linear-gradient(145deg,#0d1110,#050706);
-}
-
-.level:nth-child(9){
-    background:linear-gradient(145deg,#110f12,#060506);
-}
-
-.level:nth-child(10){
-    background:linear-gradient(145deg,#0f0f0f,#040404);
-}
-
-.level:nth-child(11){
-    background:linear-gradient(145deg,#151515,#050505);
 }
 
 .features{
@@ -603,16 +547,164 @@ footer{
     text-transform:uppercase;
 }
 
-.fade{
-    opacity:0;
-    transform:translateY(25px);
-    transition:opacity .8s ease,transform .8s ease;
+footer a{
+    color:#555;
+    text-decoration:none;
 }
 
-.fade.visible{
-    opacity:1;
-    transform:translateY(0);
+footer a:hover{
+    color:#fff;
 }
+
+
+/* =========================
+   INNER PAGES
+========================= */
+
+.page{
+    min-height:100vh;
+    position:relative;
+    z-index:2;
+    padding:160px 8% 100px;
+}
+
+.page-header{
+    max-width:850px;
+    margin-bottom:70px;
+}
+
+.page-title{
+    font-size:clamp(48px,8vw,100px);
+    line-height:.85;
+    letter-spacing:-5px;
+    text-transform:uppercase;
+}
+
+.page-subtitle{
+    color:#707070;
+    margin-top:25px;
+    max-width:650px;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.policy{
+    max-width:950px;
+}
+
+.policy-section{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:35px 0;
+}
+
+.policy-section h3{
+    font-size:18px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+}
+
+.policy-section p,
+.policy-section li{
+    color:#777;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.policy-section ul{
+    padding-left:20px;
+    margin-top:12px;
+}
+
+.policy-section a{
+    color:#ccc;
+}
+
+.notice{
+    padding:25px;
+    margin-bottom:30px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.025);
+    color:#888;
+    font-size:12px;
+    line-height:1.8;
+}
+
+.form-container{
+    max-width:700px;
+}
+
+.form-box{
+    border:1px solid rgba(255,255,255,.09);
+    background:rgba(255,255,255,.02);
+    padding:40px;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+    color:#aaa;
+    font-size:9px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:9px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    background:#080808;
+    border:1px solid rgba(255,255,255,.12);
+    color:#eee;
+    padding:15px;
+    font-family:inherit;
+    outline:none;
+    transition:.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:rgba(255,255,255,.4);
+}
+
+.form-group textarea{
+    min-height:140px;
+    resize:vertical;
+}
+
+.form-note{
+    color:#555;
+    font-size:10px;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.success{
+    display:none;
+    padding:25px;
+    margin-top:20px;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.025);
+    color:#aaa;
+    font-size:12px;
+    line-height:1.8;
+}
+
+.error{
+    color:#999;
+    font-size:11px;
+    margin-top:10px;
+    display:none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:850px){
 
@@ -634,7 +726,7 @@ footer{
     }
 
     .hero-lines{
-        opacity:.3;
+        opacity:.25;
         right:-100px;
     }
 
@@ -675,6 +767,10 @@ footer{
         flex-direction:column;
         text-align:center;
     }
+
+    .page{
+        padding:130px 7% 80px;
+    }
 }
 
 @media(max-width:520px){
@@ -687,12 +783,12 @@ footer{
         display:none;
     }
 
-    .story-box{
-        padding:30px;
-    }
-
     .cta{
         padding:60px 30px;
+    }
+
+    .form-box{
+        padding:25px;
     }
 }
 </style>
@@ -704,10 +800,10 @@ footer{
 
 <nav>
 
-    <div class="logo">
+    <a class="logo" href="#home">
         <div class="logo-icon"></div>
         FORGED FEAR
-    </div>
+    </a>
 
     <ul>
         <li><a href="#about">ABOUT</a></li>
@@ -716,16 +812,102 @@ footer{
         <li><a href="#community">COMMUNITY</a></li>
     </ul>
 
-    <a class="nav-discord" href="https://discord.gg/TCCTKRGQcs" target="_blank">
+    <a class="nav-button" href="https://discord.gg/TCCTKRGQcs" target="_blank">
         DISCORD
     </a>
 
 </nav>
 
 
-<section class="hero">
+<div id="app"></div>
 
-    <div class="hero-image"></div>
+
+<script>
+
+/* =========================
+   PARTICLES
+========================= */
+
+const particles=document.getElementById("particles");
+
+for(let i=0;i<70;i++){
+
+    const p=document.createElement("div");
+
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(8+Math.random()*18)+"s";
+    p.style.animationDelay=(-Math.random()*20)+"s";
+    p.style.opacity=.1+Math.random()*.3;
+
+    particles.appendChild(p);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+function footer(){
+
+    return `
+    <footer>
+        <span>© 2026 FORGED FEAR VR</span>
+
+        <span>
+            <a href="#privacypolicy">PRIVACY POLICY</a>
+            &nbsp; // &nbsp;
+            <a href="#data-deletion">DATA DELETION</a>
+        </span>
+
+        <span>@FORGEDFEARVR</span>
+    </footer>
+    `;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function navigation(){
+
+    return `
+    <nav>
+
+        <a class="logo" href="#home">
+            <div class="logo-icon"></div>
+            FORGED FEAR
+        </a>
+
+        <ul>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#levels">LEVELS</a></li>
+            <li><a href="#features">FEATURES</a></li>
+            <li><a href="#community">COMMUNITY</a></li>
+        </ul>
+
+        <a class="nav-button"
+           href="https://discord.gg/TCCTKRGQcs"
+           target="_blank">
+            DISCORD
+        </a>
+
+    </nav>
+    `;
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function homePage(){
+
+return `
+
+<section class="hero" id="home">
+
     <div class="hero-lines"></div>
 
     <div class="hero-content">
@@ -749,13 +931,17 @@ footer{
         </p>
 
         <div class="buttons">
+
             <a class="button primary" href="#about">
                 ENTER THE EXPERIENCE
             </a>
 
-            <a class="button" href="https://discord.gg/TCCTKRGQcs" target="_blank">
+            <a class="button"
+               href="https://discord.gg/TCCTKRGQcs"
+               target="_blank">
                 JOIN DISCORD
             </a>
+
         </div>
 
     </div>
@@ -769,7 +955,7 @@ footer{
 </section>
 
 
-<section class="section fade" id="about">
+<section class="section" id="about">
 
     <div class="section-top">
 
@@ -814,8 +1000,7 @@ footer{
                 Forged Fear isn't about becoming an unstoppable hero.
                 You are vulnerable, isolated and surrounded by the unknown.
                 <br><br>
-                Listen carefully.
-                Watch your surroundings.
+                Listen carefully. Watch your surroundings.
                 And remember that sometimes the scariest thing
                 is not knowing what is watching you.
             </p>
@@ -829,7 +1014,7 @@ footer{
 </section>
 
 
-<section class="section fade" id="levels">
+<section class="section" id="levels">
 
     <div class="section-top">
 
@@ -847,67 +1032,33 @@ footer{
 
     <div class="levels">
 
-        <div class="level">
-            <span class="level-number">LEVEL 01</span>
-            <h3>The Beginning</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 02</span>
-            <h3>Unknown</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 03</span>
-            <h3>Lost Facility</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 04</span>
-            <h3>Dream State</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 05</span>
-            <h3>Endless Hall</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 06</span>
-            <h3>Unknown</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 07</span>
-            <h3>Forgotten</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 08</span>
-            <h3>Reality?</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 09</span>
-            <h3>Unknown</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 10</span>
-            <h3>The Deeper</h3>
-        </div>
-
-        <div class="level">
-            <span class="level-number">LEVEL 11</span>
-            <h3>???</h3>
-        </div>
+        ${[
+            "The Beginning",
+            "Unknown",
+            "Lost Facility",
+            "Dream State",
+            "Endless Hall",
+            "Unknown",
+            "Forgotten",
+            "Reality?",
+            "Unknown",
+            "The Deeper",
+            "???"
+        ].map((name,i)=>`
+            <div class="level">
+                <span class="level-number">
+                    LEVEL ${String(i+1).padStart(2,"0")}
+                </span>
+                <h3>${name}</h3>
+            </div>
+        `).join("")}
 
     </div>
 
 </section>
 
 
-<section class="quote fade">
+<section class="quote">
 
     <div class="quote-symbol">"</div>
 
@@ -917,14 +1068,12 @@ footer{
         MAKES SENSE.
     </h2>
 
-    <p>
-        CAN YOU ESCAPE THE MAZE?
-    </p>
+    <p>CAN YOU ESCAPE THE MAZE?</p>
 
 </section>
 
 
-<section class="section fade" id="features">
+<section class="section" id="features">
 
     <div class="section-top">
 
@@ -947,7 +1096,7 @@ footer{
             <div class="feature-icon">◈</div>
             <h3>11 Handcrafted Levels</h3>
             <p>
-                Explore eleven unique environments inspired by the Backrooms
+                Eleven unique environments inspired by the Backrooms
                 and Dreamcore, each with its own atmosphere and dangers.
             </p>
         </div>
@@ -984,7 +1133,7 @@ footer{
 </section>
 
 
-<section class="section fade" id="community">
+<section class="section" id="community">
 
     <div class="section-top">
 
@@ -1034,7 +1183,7 @@ footer{
 </section>
 
 
-<section class="cta fade">
+<section class="cta">
 
     <div class="number">05 // FINAL WARNING</div>
 
@@ -1065,76 +1214,478 @@ footer{
 
 </section>
 
+${footer()}
 
-<footer>
+`;
 
-    <span>© 2026 FORGED FEAR VR</span>
-
-    <span>
-        THE WORLD ISN'T WHAT IT SEEMS
-    </span>
-
-    <span>
-        @FORGEDFEARVR
-    </span>
-
-</footer>
-
-
-<script>
-
-const particles = document.getElementById("particles");
-
-for(let i=0;i<70;i++){
-
-    const p=document.createElement("div");
-
-    p.className="particle";
-
-    p.style.left=Math.random()*100+"%";
-    p.style.animationDuration=(8+Math.random()*18)+"s";
-    p.style.animationDelay=(-Math.random()*20)+"s";
-    p.style.opacity=.1+Math.random()*.3;
-
-    particles.appendChild(p);
 }
 
 
-const observer=new IntersectionObserver((entries)=>{
+/* =========================
+   PRIVACY POLICY
+========================= */
 
-    entries.forEach(entry=>{
+function privacyPage(){
 
-        if(entry.isIntersecting){
-            entry.target.classList.add("visible");
-        }
+return `
+
+<section class="page">
+
+    <div class="page-header">
+
+        <div class="number">FFVR // LEGAL</div>
+
+        <h1 class="page-title">
+            Privacy<br>
+            <span class="outline">Policy</span>
+        </h1>
+
+        <p class="page-subtitle">
+            Your privacy matters. Forged Fear is designed to collect
+            only the limited information required to provide the game
+            and maintain player functionality.
+        </p>
+
+    </div>
+
+
+    <div class="policy">
+
+        <div class="notice">
+            <strong>Last Updated: August 20, 2026</strong><br><br>
+            This Privacy Policy explains what information Forged Fear VR
+            may store and how that information is used.
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>01 // Information We Store</h3>
+
+            <p>
+                Forged Fear currently stores limited player information
+                associated with gameplay.
+            </p>
+
+            <ul>
+                <li>PlayFab Player ID</li>
+                <li>In-game username</li>
+            </ul>
+
+            <p style="margin-top:15px;">
+                Your in-game username may be changed by you through
+                the available game functionality.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>02 // What We Do Not Intentionally Collect</h3>
+
+            <p>
+                Forged Fear does not intentionally request or require
+                information such as your real name, home address,
+                telephone number, payment information, or email address
+                solely for playing the game.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>03 // Why We Use This Information</h3>
+
+            <p>
+                The PlayFab Player ID and username may be used to
+                identify your player profile, provide gameplay-related
+                functionality, maintain player data, and support
+                multiplayer or online features.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>04 // PlayFab</h3>
+
+            <p>
+                Forged Fear uses Microsoft PlayFab for certain online
+                game services. Information processed through PlayFab
+                may be subject to Microsoft's own privacy policies
+                and terms.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>05 // Third-Party Services</h3>
+
+            <p>
+                Forged Fear maintains public community and social media
+                accounts, including Discord, YouTube and TikTok.
+                Visiting or interacting with those services is governed
+                by the privacy policies of the respective platforms.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>06 // Data Security</h3>
+
+            <p>
+                We take reasonable measures to protect the limited
+                player information used by Forged Fear. However,
+                no online service can guarantee absolute security.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>07 // Data Deletion</h3>
+
+            <p>
+                You may request deletion of player data associated
+                with Forged Fear. To submit a request, visit our
+                <a href="#data-deletion">Data Deletion page</a>.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>08 // Changes To This Policy</h3>
+
+            <p>
+                This Privacy Policy may be updated if Forged Fear's
+                services or data practices change. The latest version
+                will always be published on this page.
+            </p>
+
+        </div>
+
+
+        <div class="policy-section">
+
+            <h3>09 // Contact</h3>
+
+            <p>
+                If you have questions about privacy or your data,
+                you can contact the Forged Fear team through the
+                official community Discord.
+            </p>
+
+            <div class="buttons">
+
+                <a class="button"
+                   href="https://discord.gg/TCCTKRGQcs"
+                   target="_blank">
+                    CONTACT US ON DISCORD
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+${footer()}
+
+`;
+
+}
+
+
+/* =========================
+   DATA DELETION
+========================= */
+
+function deletionPage(){
+
+return `
+
+<section class="page">
+
+    <div class="page-header">
+
+        <div class="number">FFVR // PLAYER DATA</div>
+
+        <h1 class="page-title">
+            Data<br>
+            <span class="outline">Deletion</span>
+        </h1>
+
+        <p class="page-subtitle">
+            Want your Forged Fear player data removed?
+            Submit a request below.
+        </p>
+
+    </div>
+
+
+    <div class="form-container">
+
+        <div class="notice">
+
+            <strong>What can be deleted?</strong>
+
+            <br><br>
+
+            You can request deletion of player information associated
+            with your Forged Fear profile, such as your PlayFab Player ID
+            and in-game username.
+
+            <br><br>
+
+            We may need enough information to identify the correct
+            player account before processing a request.
+
+        </div>
+
+
+        <div class="form-box">
+
+            <form id="deletionForm">
+
+                <div class="form-group">
+
+                    <label for="playfab">
+                        PlayFab Player ID
+                    </label>
+
+                    <input
+                        id="playfab"
+                        name="playfab"
+                        type="text"
+                        placeholder="Enter your PlayFab ID"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="username">
+                        In-Game Username
+                    </label>
+
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        placeholder="Enter your current username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="reason">
+                        Additional Information
+                    </label>
+
+                    <textarea
+                        id="reason"
+                        name="reason"
+                        placeholder="Tell us anything that may help identify your account..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-note">
+
+                    By submitting this request, you are asking the
+                    Forged Fear team to review and process a request
+                    to delete the player data associated with the
+                    information provided.
+
+                    <br><br>
+
+                    Please do not submit passwords or other sensitive
+                    information through this form.
+
+                </div>
+
+
+                <button class="button primary" type="submit">
+                    SUBMIT DELETION REQUEST
+                </button>
+
+
+                <div class="success" id="successMessage">
+
+                    REQUEST RECEIVED.
+
+                    <br><br>
+
+                    Your request has been prepared. This demo form does
+                    not currently transmit information to a server.
+
+                    Please contact the Forged Fear team through Discord
+                    to actually submit your deletion request.
+
+                    <br><br>
+
+                    <a href="https://discord.gg/TCCTKRGQcs"
+                       target="_blank"
+                       style="color:#fff;">
+                        OPEN FORGED FEAR DISCORD →
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+${footer()}
+
+`;
+
+}
+
+
+/* =========================
+   ROUTER
+========================= */
+
+function getRoute(){
+
+    let hash=window.location.hash
+        .replace("#","")
+        .toLowerCase();
+
+    if(hash==="privacypolicy"){
+        return "privacy";
+    }
+
+    if(hash==="data-deletion"){
+        return "deletion";
+    }
+
+    return "home";
+}
+
+
+function render(){
+
+    const app=document.getElementById("app");
+
+    const route=getRoute();
+
+    if(route==="privacy"){
+        app.innerHTML=privacyPage();
+    }
+
+    else if(route==="deletion"){
+        app.innerHTML=deletionPage();
+    }
+
+    else{
+        app.innerHTML=homePage();
+    }
+
+    window.scrollTo(0,0);
+
+    setupPage();
+
+}
+
+
+function setupPage(){
+
+    document.querySelectorAll(".hero-lines").forEach(lines=>{
+
+        document.addEventListener("mousemove",e=>{
+
+            const x=(e.clientX/window.innerWidth-.5)*8;
+            const y=(e.clientY/window.innerHeight-.5)*8;
+
+            lines.style.transform=
+                `perspective(600px) rotateY(${-25+x}deg) translate(${x}px,${y}px)`;
+
+        });
 
     });
 
-},{threshold:.12});
+
+    const deletionForm=document.getElementById("deletionForm");
+
+    if(deletionForm){
+
+        deletionForm.addEventListener("submit",function(e){
+
+            e.preventDefault();
+
+            const success=document.getElementById("successMessage");
+
+            success.style.display="block";
+
+            success.scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+
+        });
+
+    }
+}
 
 
-document.querySelectorAll(".fade").forEach(el=>{
-    observer.observe(el);
-});
+/* =========================
+   ROUTE LINKS
+========================= */
 
+document.addEventListener("click",function(e){
 
-document.addEventListener("mousemove",(e)=>{
+    const link=e.target.closest('a[href^="#"]');
 
-    const x=(e.clientX/window.innerWidth-.5)*8;
-    const y=(e.clientY/window.innerHeight-.5)*8;
+    if(!link) return;
 
-    const lines=document.querySelector(".hero-lines");
+    const href=link.getAttribute("href");
 
-    if(lines){
-        lines.style.transform=
-            `perspective(600px) rotateY(${-25+x}deg) translate(${x}px,${y}px)`;
+    if(
+        href==="#home" ||
+        href==="#privacypolicy" ||
+        href==="#data-deletion"
+    ){
+
+        e.preventDefault();
+
+        window.location.hash=href.substring(1);
+
+        render();
+
     }
 
 });
 
 
+window.addEventListener("hashchange",render);
+
+render();
+
 </script>
 
 </body>
 </html>
-```
